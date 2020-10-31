@@ -1,0 +1,20 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Context.puml
+
+Person(user, "User", "Person who sends and receives messages")
+
+Enterprise_Boundary(system_boundary, "Messaging System Boundary"){
+
+System(messaging_system, "Messaging System", "Receives and propagates messages to users")
+
+}
+
+System_Ext(logging_system, "Logging System", "Stores information about activities")
+
+Rel(user, messaging_system, "Sends messages using")
+Rel(messaging_system, user, "Receiving messages using")
+Rel(logging_system, messaging_system, "Saves logs using")
+
+
+
+@enduml

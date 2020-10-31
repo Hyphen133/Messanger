@@ -1,0 +1,27 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(user, "User", "Person who sends and receives messages")
+
+System_Boundary(system_boundary, "Messaging System Boundary"){
+
+Container(pwa_app, "Progressive Web Application", "JavaScript, HTML, PWA", "Displays messages via web browser")
+Container(messaging_api, "Messaging API", "Java, Spring", "Displays messages via web browser")
+Container(message_queue, "Message Queue", "RabbitMQ", "Displays messages via web browser")
+ContainerDb(message_db, "Message Database", "Redis", "Stores messages")
+}
+
+System_Ext(logging_system, "Logging System", "Stores information about activities")
+
+Rel(user, pwa_app, "Sends messages using")
+Rel(pwa_app, user, "Receiving messages using")
+Rel(pwa_app, messaging_api, "Sending messages using")
+Rel(pwa_app, message_queue, "Receiving messages using")
+Rel(logging_system, messaging_api, "Saves logs using")
+
+Rel(messaging_api, message_queue, "Propagating messages using")
+Rel(messaging_api, message_db, "Writes messages to")
+
+
+
+@enduml
