@@ -1,6 +1,6 @@
 package domain;
 
-public class Author {
+class Author {
     private final String nickname;
 
     private Author(String nickname) {

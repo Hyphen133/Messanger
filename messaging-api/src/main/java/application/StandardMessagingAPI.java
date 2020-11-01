@@ -1,8 +1,8 @@
 package application;
 
 import domain.Chat;
+import domain.MessageEventDispatcherFactory;
 import infrastructure.LocalMessageEventDispatcher;
-import domain.Message;
 import domain.MessageEventDispatcher;
 import domain.NewMessageReceived;
 
@@ -12,7 +12,7 @@ final class StandardMessagingAPI implements MessagingAPI {
     public MessageEventDispatcher dispatcher;
 
     public StandardMessagingAPI() {
-        dispatcher = new LocalMessageEventDispatcher();
+        dispatcher = MessageEventDispatcherFactory.getInstance();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package application;
 
 import domain.Chat;
-import domain.Message;
 
 import java.util.UUID;
 
