@@ -1,8 +1,8 @@
 package infrastructure;
 
 import domain.Chat;
+import domain.ChatMessage;
 import domain.ChatRepository;
-import application.Message;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +16,8 @@ public class InMemoryChatRepository implements ChatRepository {
     }
 
     @Override
-    public List<Message> getMessagesFor(Chat chat) {
-        return null;
+    public List<ChatMessage> getMessagesFor(Chat chat) {
+        return chat.getMessages();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package application;
 
 import domain.Chat;
-import domain.MessageBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,10 +30,10 @@ public class MessagingAPIWriteMessageScenarios {
         final String content = "Hello";
         final String author = "Author";
         final Chat chat = messagingAPI.createChatFor(id);
-        Message message = MessageBuilder.create().withAuthor(author).withContent(content).forChat(id).build();
+        WriteMessage writeMessage = WriteMessageBuilder.create().withAuthor(author).withContent(content).forChat(id).build();
 
         //When
-        messagingAPI.write(message);
+        messagingAPI.write(writeMessage);
 
         //Then
         Assert.assertEquals(1, chat.getMessages().size());

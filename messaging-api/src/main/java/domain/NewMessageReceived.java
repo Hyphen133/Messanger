@@ -1,6 +1,6 @@
 package domain;
 
-import application.Message;
+import application.WriteMessage;
 
 import java.util.UUID;
 
@@ -19,8 +19,8 @@ public class NewMessageReceived {
         return new NewMessageReceived(chatId, author, content);
     }
 
-    public static NewMessageReceived from(Message message) {
-        return NewMessageReceived.from(message.getChatId(), message.getAuthor(), message.getContent());
+    public static NewMessageReceived from(WriteMessage writeMessage) {
+        return NewMessageReceived.from(writeMessage.getChatId(), writeMessage.getAuthor(), writeMessage.getContent());
     }
 
     public UUID getChatId() {
