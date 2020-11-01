@@ -1,18 +1,18 @@
 package application;
 
 import domain.Chat;
-import domain.LocalMessageDispatcher;
+import infrastructure.LocalMessageEventDispatcher;
 import domain.Message;
-import domain.MessageDispatcher;
+import domain.MessageEventDispatcher;
 import domain.NewMessageReceived;
 
 import java.util.UUID;
 
 final class StandardMessagingAPI implements MessagingAPI {
-    public MessageDispatcher dispatcher;
+    public MessageEventDispatcher dispatcher;
 
     public StandardMessagingAPI() {
-        dispatcher = new LocalMessageDispatcher();
+        dispatcher = new LocalMessageEventDispatcher();
     }
 
     @Override

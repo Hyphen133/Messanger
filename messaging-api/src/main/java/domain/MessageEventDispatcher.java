@@ -1,6 +1,6 @@
 package domain;
 
-public interface MessageDispatcher {
+public interface MessageEventDispatcher {
     void dispatch(NewMessageReceived event);
     void subscribe(Chat chat);
 }
