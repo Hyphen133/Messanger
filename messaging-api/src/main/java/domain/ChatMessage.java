@@ -4,16 +4,16 @@ import java.util.UUID;
 
 public class ChatMessage {
     private final UUID chatId;
-    private String author;
+    private Author author;
     private final String content;
 
-    private ChatMessage(final UUID chatId,final String author, final String content) {
+    private ChatMessage(final UUID chatId,final Author author, final String content) {
         this.chatId = chatId;
         this.author = author;
         this.content = content;
     }
 
-    public static ChatMessage from(UUID chatId, String author, String content) {
+    public static ChatMessage from(UUID chatId, Author author, String content) {
         return new ChatMessage(chatId, author, content);
     }
 
@@ -25,7 +25,7 @@ public class ChatMessage {
         return content;
     }
 
-    public String getAuthor(){
+    public Author getAuthor(){
         return author;
     }
 }

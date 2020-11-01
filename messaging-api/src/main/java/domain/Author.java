@@ -1,6 +1,6 @@
 package domain;
 
-class Author {
+public class Author {
     private final String nickname;
 
     private Author(String nickname) {
@@ -9,5 +9,9 @@ class Author {
 
     public static Author from(String nickname) {
         return new Author(nickname);
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

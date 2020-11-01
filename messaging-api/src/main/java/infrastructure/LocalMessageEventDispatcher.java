@@ -1,5 +1,6 @@
 package infrastructure;
 
+import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
 import domain.MessageEventDispatcher;
@@ -18,7 +19,7 @@ public class LocalMessageEventDispatcher implements MessageEventDispatcher {
 
     @Override
     public void dispatch(NewMessageReceived event) {
-        ChatMessage chatMessage = ChatMessage.from(event.getChatId(), event.getAuthor(), event.getContent());
+        ChatMessage chatMessage = ChatMessage.from(event.getChatId(), Author.from(event.getAuthor()), event.getContent());
         chats.get(event.getChatId()).addMessage(chatMessage);
     }
 

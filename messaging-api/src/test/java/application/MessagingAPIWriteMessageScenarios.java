@@ -39,7 +39,7 @@ public class MessagingAPIWriteMessageScenarios {
         //Then
         Assert.assertEquals(1, chat.getMessages().size());
         Assert.assertEquals(content, chat.getMessages().get(0).getContent());
-        Assert.assertEquals(author, chat.getMessages().get(0).getAuthor());
+        Assert.assertEquals(author, chat.getMessages().get(0).getAuthor().getNickname());
     }
 
 }
