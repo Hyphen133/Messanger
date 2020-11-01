@@ -1,7 +1,6 @@
 package application;
 
 import domain.Chat;
-import domain.Message;
 import domain.MessageBuilder;
 import org.junit.Assert;
 import org.junit.Test;

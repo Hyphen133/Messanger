@@ -1,5 +1,7 @@
 package domain;
 
+import application.Message;
+
 import java.util.UUID;
 
 public class MessageBuilder {

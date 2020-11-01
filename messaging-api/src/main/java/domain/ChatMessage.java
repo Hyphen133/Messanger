@@ -13,10 +13,6 @@ public class ChatMessage {
         this.content = content;
     }
 
-    public ChatMessage from(Message message){
-        return new ChatMessage(message.getChatId(), message.getAuthor(), message.getContent());
-    }
-
     public static ChatMessage from(UUID chatId, String author, String content) {
         return new ChatMessage(chatId, author, content);
     }
