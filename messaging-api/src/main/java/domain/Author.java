@@ -3,11 +3,11 @@ package domain;
 public class Author {
     private final String nickname;
 
-    private Author(String nickname) {
+    private Author(final String nickname) {
         this.nickname = nickname;
     }
 
-    public static Author from(String nickname) {
+    public static Author from(final String nickname) {
         return new Author(nickname);
     }
 

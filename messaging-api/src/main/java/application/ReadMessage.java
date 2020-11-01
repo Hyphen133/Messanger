@@ -1,7 +1,5 @@
 package application;
 
-import java.util.UUID;
-
 public class ReadMessage {
 
     private final String author;
@@ -12,7 +10,7 @@ public class ReadMessage {
         this.content = content;
     }
 
-    public static ReadMessage from(String author, String content) {
+    public static ReadMessage from(final String author, final String content) {
         return new ReadMessage(author, content);
     }
 

@@ -15,11 +15,11 @@ public class NewMessageReceived {
         this.content = content;
     }
 
-    public static NewMessageReceived from(UUID chatId, String author, String content) {
+    public static NewMessageReceived from(final UUID chatId, final String author, final String content) {
         return new NewMessageReceived(chatId, author, content);
     }
 
-    public static NewMessageReceived from(WriteMessage writeMessage) {
+    public static NewMessageReceived from(final WriteMessage writeMessage) {
         return NewMessageReceived.from(writeMessage.getChatId(), writeMessage.getAuthor(), writeMessage.getContent());
     }
 

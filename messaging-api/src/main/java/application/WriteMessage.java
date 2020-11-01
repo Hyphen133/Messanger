@@ -8,14 +8,14 @@ public class WriteMessage {
     private final String author;
     private final String content;
 
-    private WriteMessage(UUID chatId, final String author, String content) {
+    private WriteMessage(final UUID chatId, final String author, final String content) {
 
         this.chatId = chatId;
         this.author = author;
         this.content = content;
     }
 
-    public static WriteMessage from(UUID chatId, String author, String content) {
+    public static WriteMessage from(final UUID chatId, final String author, final String content) {
         return new WriteMessage(chatId, author, content);
     }
 

@@ -18,13 +18,13 @@ public class LocalMessageEventDispatcher implements MessageEventDispatcher {
     }
 
     @Override
-    public void dispatch(NewMessageReceived event) {
-        ChatMessage chatMessage = ChatMessage.from(Author.from(event.getAuthor()), event.getContent());
+    public void dispatch(final NewMessageReceived event) {
+        final ChatMessage chatMessage = ChatMessage.from(Author.from(event.getAuthor()), event.getContent());
         chats.get(event.getChatId()).addMessage(chatMessage);
     }
 
     @Override
-    public void subscribe(Chat chat){
+    public void subscribe(final Chat chat){
         chats.put(chat.getId(),chat);
     }
 }

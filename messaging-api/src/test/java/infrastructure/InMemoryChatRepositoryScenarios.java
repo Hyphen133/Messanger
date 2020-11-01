@@ -10,8 +10,8 @@ public class InMemoryChatRepositoryScenarios {
     @Test
     public void shouldAddChatToRepository(){
         //Given
-        InMemoryChatRepository chatRepository = new InMemoryChatRepository();
-        UUID chatId = UUID.randomUUID();
+        final InMemoryChatRepository chatRepository = new InMemoryChatRepository();
+        final UUID chatId = UUID.randomUUID();
 
         //When
         chatRepository.add(Chat.from(chatId));
@@ -23,7 +23,7 @@ public class InMemoryChatRepositoryScenarios {
     @Test
     public void shouldThrowExceptionOnTryingToAccessChatNotInRepository(){
         //Given
-        InMemoryChatRepository chatRepository = new InMemoryChatRepository();
+        final InMemoryChatRepository chatRepository = new InMemoryChatRepository();
 
         //When
         boolean wasCaught = false;

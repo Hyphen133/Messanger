@@ -21,20 +21,20 @@ final class StandardMessagingAPI implements MessagingAPI {
     }
 
     @Override
-    public void write(WriteMessage writeMessage) {
-        NewMessageReceived event = NewMessageReceived.from(writeMessage);
+    public void write(final WriteMessage writeMessage) {
+        final NewMessageReceived event = NewMessageReceived.from(writeMessage);
         dispatcher.dispatch(event);
     }
 
     @Override
-    public Chat createChatFor(UUID id) {
-        Chat chat = Chat.from(id);
+    public Chat createChatFor(final UUID chatId) {
+        final Chat chat = Chat.from(chatId);
         dispatcher.subscribe(chat);
         return chat;
     }
 
     @Override
-    public List<ReadMessage> getMessagesForChat(UUID chatId) {
+    public List<ReadMessage> getMessagesForChat(final UUID chatId) {
         return chatRepository.getById(chatId)
                 .getMessages()
                 .stream()

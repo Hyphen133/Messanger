@@ -11,7 +11,7 @@ public class MessagingAPIWriteMessageScenarios {
     @Test
     public void createNewChat(){
         //Given
-        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
         final UUID id = UUID.randomUUID();
 
         //When
@@ -25,12 +25,12 @@ public class MessagingAPIWriteMessageScenarios {
     @Test
     public void updateChatOnNewMessage(){
         //Given
-        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
         final UUID id = UUID.randomUUID();
         final String content = "Hello";
         final String author = "Author";
         final Chat chat = messagingAPI.createChatFor(id);
-        WriteMessage writeMessage = WriteMessageBuilder.create().withAuthor(author).withContent(content).forChat(id).build();
+        final WriteMessage writeMessage = WriteMessageBuilder.create().withAuthor(author).withContent(content).forChat(id).build();
 
         //When
         messagingAPI.write(writeMessage);

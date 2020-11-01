@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,11 +13,11 @@ public class Chat {
         messages = new ArrayList<>();
     }
 
-    public static Chat from(UUID id){
-        return new Chat(id);
+    public static Chat from(final UUID chatId){
+        return new Chat(chatId);
     }
 
-    public void addMessage(ChatMessage message){
+    public void addMessage(final ChatMessage message){
         messages.add(message);
     }
 

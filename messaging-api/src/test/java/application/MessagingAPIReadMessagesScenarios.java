@@ -15,8 +15,8 @@ public class MessagingAPIReadMessagesScenarios {
     @Test
     public void shouldReadMessagesForExistingChat(){
         //Given
-        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
-        Chat chat = createChat();
+        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final Chat chat = createChat();
 
         //When
         final List<ReadMessage> messagesForChat = messagingAPI.getMessagesForChat(chat.getId());
@@ -26,12 +26,12 @@ public class MessagingAPIReadMessagesScenarios {
     }
 
     private Chat createChat() {
-        ChatRepository chatRepository = ChatRepositoryFactory.getInstance();
-        UUID chatId = UUID.randomUUID();
+        final ChatRepository chatRepository = ChatRepositoryFactory.getInstance();
+        final UUID chatId = UUID.randomUUID();
         chatRepository.add(Chat.from(chatId));
-        Author author1 = Author.from("Author1");
-        Author author2 = Author.from("Author2");
-        Chat chat = chatRepository.getById(chatId);
+        final Author author1 = Author.from("Author1");
+        final Author author2 = Author.from("Author2");
+        final  Chat chat = chatRepository.getById(chatId);
         chat.addMessage(ChatMessage.from(author1, "Hello"));
         chat.addMessage(ChatMessage.from(author2, "Hi!!!!"));
         chat.addMessage(ChatMessage.from(author1, "How are u?"));

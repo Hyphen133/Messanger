@@ -9,7 +9,7 @@ public class ChatMessage {
         this.content = content;
     }
 
-    public static ChatMessage from(Author author, String content) {
+    public static ChatMessage from(final Author author, final String content) {
         return new ChatMessage(author, content);
     }
 
