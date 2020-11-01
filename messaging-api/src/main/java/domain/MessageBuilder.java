@@ -1,8 +1,11 @@
 package domain;
 
+import java.util.UUID;
+
 public class MessageBuilder {
 
     private String content;
+    private UUID chatId;
 
     private MessageBuilder() {
         this.content = "";
@@ -17,7 +20,13 @@ public class MessageBuilder {
         return this;
     }
 
+    public MessageBuilder forChat(UUID chatId){
+        this.chatId = chatId;
+        return this;
+    }
+
+
     public Message build(){
-        return Message.from(content);
+        return Message.from(chatId, content);
     }
 }
