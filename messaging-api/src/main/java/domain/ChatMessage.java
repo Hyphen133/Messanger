@@ -2,7 +2,7 @@ package domain;
 
 import java.util.UUID;
 
-class ChatMessage {
+public class ChatMessage {
     private final UUID chatId;
     private String author;
     private final String content;

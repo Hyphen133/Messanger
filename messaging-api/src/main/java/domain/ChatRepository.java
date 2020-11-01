@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface ChatRepository {
     List<Message> getMessagesFor(Chat chat);
     void add(Chat chat);
-    void getById(UUID id);
+    Chat getById(UUID id);
 }
