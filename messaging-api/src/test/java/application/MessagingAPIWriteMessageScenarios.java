@@ -1,6 +1,8 @@
 package application;
 
 import domain.Chat;
+import domain.ChatRepository;
+import domain.ChatRepositoryFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,6 +41,20 @@ public class MessagingAPIWriteMessageScenarios {
         Assert.assertEquals(1, chat.getMessages().size());
         Assert.assertEquals(content, chat.getMessages().get(0).getContent());
         Assert.assertEquals(author, chat.getMessages().get(0).getAuthor().getNickname());
+    }
+
+    @Test
+    public void createNewChatShouldBePersisted(){
+        //Given
+        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        ChatRepository chatRepository = ChatRepositoryFactory.getInstance();
+        UUID chatId = UUID.randomUUID();
+
+        //When
+        messagingAPI.createChatFor(chatId);
+
+        //Then
+        Assert.assertNotEquals(null, chatRepository.getById(chatId));
     }
 
 }

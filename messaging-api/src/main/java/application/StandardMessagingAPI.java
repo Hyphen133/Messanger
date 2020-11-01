@@ -29,6 +29,7 @@ final class StandardMessagingAPI implements MessagingAPI {
     @Override
     public Chat createChatFor(final UUID chatId) {
         final Chat chat = Chat.from(chatId);
+        chatRepository.add(chat);
         dispatcher.subscribe(chat);
         return chat;
     }

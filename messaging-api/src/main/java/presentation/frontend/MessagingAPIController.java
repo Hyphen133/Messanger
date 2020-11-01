@@ -48,4 +48,19 @@ public class MessagingAPIController {
     public void writeMessage(@RequestBody WriteMessageRepresentation writeMessageRepresentation){
         messagingAPI.write(WriteMessage.from(writeMessageRepresentation.chatId, writeMessageRepresentation.author, writeMessageRepresentation.content));
     }
+
+
+    //http://localhost:8080/createChat
+    /*
+    {
+        "chatId" : "5229ff98-2b23-4fa9-892c-55448f0c63c4"
+    }
+     */
+    @PostMapping("/createChat")
+    @ResponseStatus(value = OK)
+    public void createChat(@RequestBody ChatCreationRequestBody chatCreationRequestBody){
+        messagingAPI.createChatFor(UUID.fromString(chatCreationRequestBody.chatId));
+    }
+
 }
+
