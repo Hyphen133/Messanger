@@ -6,6 +6,7 @@ public class MessageBuilder {
 
     private String content;
     private UUID chatId;
+    private String author;
 
     private MessageBuilder() {
         this.content = "";
@@ -25,8 +26,12 @@ public class MessageBuilder {
         return this;
     }
 
+    public MessageBuilder withAuthor(String author){
+        this.author = author;
+        return this;
+    }
 
     public Message build(){
-        return Message.from(chatId, content);
+        return Message.from(chatId, author, content);
     }
 }

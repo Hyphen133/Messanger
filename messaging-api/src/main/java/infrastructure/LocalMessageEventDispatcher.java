@@ -18,7 +18,7 @@ public class LocalMessageEventDispatcher implements MessageEventDispatcher {
 
     @Override
     public void dispatch(NewMessageReceived event) {
-        ChatMessage chatMessage = ChatMessage.from(event.getChatId(), event.getContent());
+        ChatMessage chatMessage = ChatMessage.from(event.getChatId(), event.getAuthor(), event.getContent());
         chats.get(event.getChatId()).addMessage(chatMessage);
     }
 

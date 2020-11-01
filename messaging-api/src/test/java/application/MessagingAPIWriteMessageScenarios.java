@@ -30,8 +30,9 @@ public class MessagingAPIWriteMessageScenarios {
         MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
         final UUID id = UUID.randomUUID();
         final String content = "Hello";
+        final String author = "Author";
         final Chat chat = messagingAPI.createChatFor(id);
-        Message message = MessageBuilder.create().withContent(content).forChat(id).build();
+        Message message = MessageBuilder.create().withAuthor(author).withContent(content).forChat(id).build();
 
         //When
         messagingAPI.write(message);
@@ -39,6 +40,7 @@ public class MessagingAPIWriteMessageScenarios {
         //Then
         Assert.assertEquals(1, chat.getMessages().size());
         Assert.assertEquals(content, chat.getMessages().get(0).getContent());
+        Assert.assertEquals(author, chat.getMessages().get(0).getAuthor());
     }
 
 }

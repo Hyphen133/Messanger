@@ -4,19 +4,21 @@ import java.util.UUID;
 
 public class ChatMessage {
     private final UUID chatId;
+    private String author;
     private final String content;
 
-    private ChatMessage(final UUID chatId, final String content) {
+    private ChatMessage(final UUID chatId,final String author, final String content) {
         this.chatId = chatId;
+        this.author = author;
         this.content = content;
     }
 
     public ChatMessage from(Message message){
-        return new ChatMessage(message.getChatId(), message.getContent());
+        return new ChatMessage(message.getChatId(), message.getAuthor(), message.getContent());
     }
 
-    public static ChatMessage from(UUID chatId, String content) {
-        return new ChatMessage(chatId,content);
+    public static ChatMessage from(UUID chatId, String author, String content) {
+        return new ChatMessage(chatId, author, content);
     }
 
     public UUID getChatId() {
@@ -25,5 +27,9 @@ public class ChatMessage {
 
     public String getContent() {
         return content;
+    }
+
+    public String getAuthor(){
+        return author;
     }
 }
