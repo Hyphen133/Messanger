@@ -30,4 +30,13 @@ public class WriteMessage {
     public String getAuthor() {
         return author;
     }
+
+    @Override
+    public String toString() {
+        return "WriteMessage{" +
+                "chatId=" + chatId +
+                ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
