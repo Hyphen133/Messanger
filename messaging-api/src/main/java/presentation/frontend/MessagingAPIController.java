@@ -4,6 +4,7 @@ import application.MessagingAPI;
 import application.ReadMessage;
 import application.WriteMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.OK;
 
+@CrossOrigin("*")
 @RestController
 public class MessagingAPIController {
 
