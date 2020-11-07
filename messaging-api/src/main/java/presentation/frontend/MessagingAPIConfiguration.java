@@ -14,7 +14,7 @@ public class MessagingAPIConfiguration {
         return MessagingAPIFactory.createAPI();
     }
 
-    //Required to process MessagingSocket endpoint 
+    //Required to process MessagingSocket endpoint
     @Bean
     public ServerEndpointExporter serverEndpointExporter() {
         return new ServerEndpointExporter();
