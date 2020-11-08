@@ -13,9 +13,9 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -27,18 +27,22 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class MessagingSocket {
     private Logger logger = LoggerFactory.getInstance();
     private Session session;
-    public static Map<String, Set<MessagingSocket>> chatListeners = new HashMap<>();
+    public static Map<String, Set<MessagingSocket>> chatListeners = new ConcurrentHashMap<>();
+    public static Map<String, String> sessionToChatIdMapping = new ConcurrentHashMap<>();
 
-
+    
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username, @PathParam("chatId") String chatId) {
         this.session = session;
+        logger.log(LoggingType.INFO, "Started new session " + session.getId());
         logger.log(LoggingType.INFO, username + " connected to " + chatId);
 
         if (!chatListeners.containsKey(chatId)) {
             chatListeners.put(chatId, new CopyOnWriteArraySet<>());
         }
         chatListeners.get(chatId).add(this);
+        sessionToChatIdMapping.put(session.getId(), chatId);
+
     }
 
     @OnMessage //Allows the client to send message to the socket.
@@ -49,7 +53,8 @@ public class MessagingSocket {
 
     @OnClose
     public void onClose(Session session) {
-//        listeners.remove(this);
+        final String chatId = sessionToChatIdMapping.get(session.getId());
+        chatListeners.get(chatId).removeIf(messagingSocket -> messagingSocket.session.getId().equals(session.getId()));
     }
 
     @OnError
