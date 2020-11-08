@@ -1,5 +1,8 @@
 package presentation.frontend.websockets;
 
+import application.MessagingAPI;
+import application.MessagingAPIFactory;
+import application.WriteMessage;
 import infrastructure.Logger;
 import infrastructure.LoggerFactory;
 import infrastructure.LoggingType;
@@ -15,6 +18,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -29,6 +33,7 @@ public class MessagingSocket {
     private Session session;
     public static Map<String, Set<MessagingSocket>> chatListeners = new ConcurrentHashMap<>();
     public static Map<String, String> sessionToChatIdMapping = new ConcurrentHashMap<>();
+    private MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
 
 
     @OnOpen
@@ -48,6 +53,7 @@ public class MessagingSocket {
     @OnMessage //Allows the client to send message to the socket.
     public void onMessage(MessageRepresentation messageRepresentation) {
         logger.log(LoggingType.INFO, "Received " + messageRepresentation.toString());
+        messagingAPI.write(WriteMessage.from(UUID.fromString(messageRepresentation.chatId), messageRepresentation.author, messageRepresentation.content));
         broadcastToChat(messageRepresentation);
     }
 
