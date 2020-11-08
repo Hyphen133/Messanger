@@ -30,7 +30,7 @@ public class MessagingSocket {
     public static Map<String, Set<MessagingSocket>> chatListeners = new ConcurrentHashMap<>();
     public static Map<String, String> sessionToChatIdMapping = new ConcurrentHashMap<>();
 
-    
+
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username, @PathParam("chatId") String chatId) {
         this.session = session;
