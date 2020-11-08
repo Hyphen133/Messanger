@@ -43,7 +43,7 @@ public class MessagingSocket {
 
     @OnMessage //Allows the client to send message to the socket.
     public void onMessage(MessageRepresentation messageRepresentation) {
-        logger.log(LoggingType.INFO, "Recieved " + messageRepresentation.content);
+        logger.log(LoggingType.INFO, "Received " + messageRepresentation.toString());
         broadcastToChat(messageRepresentation);
     }
 
