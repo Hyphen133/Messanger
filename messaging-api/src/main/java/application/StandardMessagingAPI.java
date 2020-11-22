@@ -19,9 +19,9 @@ final class StandardMessagingAPI implements MessagingAPI {
     public final MessageEventDispatcher dispatcher;
     private final Logger logger = LoggerFactory.getInstance();
 
-    public StandardMessagingAPI() {
-        chatRepository = ChatRepositoryFactory.getInstance();
-        dispatcher = MessageEventDispatcherFactory.getInstance();
+    public StandardMessagingAPI(ChatRepository chatRepository, MessageEventDispatcher dispatcher) {
+        this.chatRepository = chatRepository;
+        this.dispatcher = dispatcher;
     }
 
     @Override
