@@ -1,13 +1,14 @@
 package domain;
 
-import domain.ChatRepository;
+import ports.ChatRepository;
 import infrastructure.InMemoryChatRepository;
+import ports.ChatRespositoryFactory;
 
-public class ChatRepositoryFactory {
+public class LocalChatRepositoryFactory implements ChatRespositoryFactory {
 
     private static ChatRepository instance = null;
 
-    private ChatRepositoryFactory() {
+    private LocalChatRepositoryFactory() {
     }
 
     public static ChatRepository getInstance(){
@@ -15,5 +16,10 @@ public class ChatRepositoryFactory {
             instance = new InMemoryChatRepository();
         }
         return instance;
+    }
+
+    @Override
+    public ChatRepository create() {
+        return getInstance();
     }
 }

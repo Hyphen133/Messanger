@@ -1,7 +1,7 @@
 package application;
 
-import domain.ChatRepositoryFactory;
-import domain.MessageEventDispatcherFactory;
+import domain.LocalChatRepositoryFactory;
+import domain.LocalMessageEventDispatcherFactory;
 
 public class MessagingAPIFactory {
 
@@ -12,7 +12,7 @@ public class MessagingAPIFactory {
 
     public static MessagingAPI createAPI(){
         if(instance == null){
-            instance = new StandardMessagingAPI(ChatRepositoryFactory.getInstance(), MessageEventDispatcherFactory.getInstance());
+            instance = new StandardMessagingAPI(LocalChatRepositoryFactory.getInstance(), LocalMessageEventDispatcherFactory.getInstance());
         }
         return instance;
     }

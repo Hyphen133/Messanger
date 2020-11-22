@@ -1,6 +1,7 @@
 package infrastructure;
 
 
+import ports.Logger;
 
 public class LoggerFactory {
 

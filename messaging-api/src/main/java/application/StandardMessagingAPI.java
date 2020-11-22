@@ -1,14 +1,12 @@
 package application;
 
 import domain.Chat;
-import domain.ChatRepository;
-import domain.ChatRepositoryFactory;
-import domain.MessageEventDispatcherFactory;
-import domain.MessageEventDispatcher;
+import ports.ChatRepository;
+import ports.MessageEventDispatcher;
 import domain.NewMessageReceived;
-import infrastructure.Logger;
+import ports.Logger;
 import infrastructure.LoggerFactory;
-import infrastructure.LoggingType;
+import ports.LoggingType;
 
 import java.util.List;
 import java.util.UUID;

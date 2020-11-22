@@ -1,8 +1,8 @@
 package application;
 
+import domain.LocalChatRepositoryFactory;
 import domain.Chat;
-import domain.ChatRepository;
-import domain.ChatRepositoryFactory;
+import ports.ChatRepository;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class MessagingAPIWriteMessageScenarios {
     public void createNewChatShouldBePersisted(){
         //Given
         MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
-        ChatRepository chatRepository = ChatRepositoryFactory.getInstance();
+        ChatRepository chatRepository = LocalChatRepositoryFactory.getInstance();
         UUID chatId = UUID.randomUUID();
 
         //When

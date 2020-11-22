@@ -1,6 +1,8 @@
 package infrastructure;
 
 import org.slf4j.LoggerFactory;
+import ports.Logger;
+import ports.LoggingType;
 
 public class ConsoleInfoLogger implements Logger {
 

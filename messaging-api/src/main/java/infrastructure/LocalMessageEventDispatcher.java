@@ -3,7 +3,7 @@ package infrastructure;
 import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
-import domain.MessageEventDispatcher;
+import ports.MessageEventDispatcher;
 import domain.NewMessageReceived;
 
 import java.util.HashMap;

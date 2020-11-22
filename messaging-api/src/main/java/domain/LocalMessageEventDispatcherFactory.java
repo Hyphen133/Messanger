@@ -1,11 +1,13 @@
 package domain;
 
 import infrastructure.LocalMessageEventDispatcher;
+import ports.MessageEventDispatcher;
+import ports.MessageEventDispatcherFactory;
 
-public class MessageEventDispatcherFactory {
+public class LocalMessageEventDispatcherFactory implements MessageEventDispatcherFactory {
     private static MessageEventDispatcher instance = null;
 
-    private MessageEventDispatcherFactory() {
+    private LocalMessageEventDispatcherFactory() {
     }
 
     public static MessageEventDispatcher getInstance(){
@@ -13,5 +15,10 @@ public class MessageEventDispatcherFactory {
             instance = new LocalMessageEventDispatcher();
         }
         return instance;
+    }
+
+    @Override
+    public MessageEventDispatcher create() {
+        return getInstance();
     }
 }

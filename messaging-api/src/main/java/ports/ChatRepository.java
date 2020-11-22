@@ -1,5 +1,7 @@
-package domain;
+package ports;
 
+import domain.Chat;
+import domain.ChatMessage;
 import java.util.List;
 import java.util.UUID;
 

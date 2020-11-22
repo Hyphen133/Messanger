@@ -3,8 +3,8 @@ package application;
 import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
-import domain.ChatRepository;
-import domain.ChatRepositoryFactory;
+import ports.ChatRepository;
+import domain.LocalChatRepositoryFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class MessagingAPIReadMessagesScenarios {
     }
 
     private Chat createChat() {
-        final ChatRepository chatRepository = ChatRepositoryFactory.getInstance();
+        final ChatRepository chatRepository = LocalChatRepositoryFactory.getInstance();
         final UUID chatId = UUID.randomUUID();
         chatRepository.add(Chat.from(chatId));
         final Author author1 = Author.from("Author1");

@@ -2,7 +2,7 @@ package infrastructure;
 
 import domain.Chat;
 import domain.ChatMessage;
-import domain.ChatRepository;
+import ports.ChatRepository;
 
 import java.util.HashMap;
 import java.util.List;
