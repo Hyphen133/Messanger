@@ -1,7 +1,7 @@
 package application;
 
-import domain.LocalChatRepositoryFactory;
-import domain.LocalMessageEventDispatcherFactory;
+import infrastructure.LocalChatRepositoryFactory;
+import infrastructure.LocalMessageEventDispatcherFactory;
 
 public class MessagingAPIFactory {
 

@@ -1,4 +1,4 @@
-package domain;
+package infrastructure;
 
 import infrastructure.LocalMessageEventDispatcher;
 import ports.MessageEventDispatcher;
