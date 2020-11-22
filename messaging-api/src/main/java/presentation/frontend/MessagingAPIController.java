@@ -52,7 +52,7 @@ public class MessagingAPIController {
     @PostMapping("/connectUserToChat")
     @ResponseStatus(value = OK)
     public void connectUserToChat(@RequestBody UserConnectToChatRequestBody userConnectToChatRequestBody){
-        messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, userConnectToChatRequestBody.chatId);
+        messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, UUID.fromString(userConnectToChatRequestBody.chatId));
 
     }
 
