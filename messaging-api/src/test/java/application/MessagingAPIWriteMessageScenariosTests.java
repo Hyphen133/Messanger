@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-public class MessagingAPIWriteMessageScenarios {
+public class MessagingAPIWriteMessageScenariosTests {
 
     @Test
     public void createNewChat(){

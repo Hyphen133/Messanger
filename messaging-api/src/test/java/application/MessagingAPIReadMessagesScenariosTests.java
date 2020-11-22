@@ -11,7 +11,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
-public class MessagingAPIReadMessagesScenarios {
+public class MessagingAPIReadMessagesScenariosTests {
     @Test
     public void shouldReadMessagesForExistingChat(){
         //Given
