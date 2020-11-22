@@ -16,38 +16,29 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-/**
- * Created by The Geeky Asian on 1/2/2019.
- */
 @Component
-@ServerEndpoint(value = "/webSocket/{username}/{chatId}",
+@ServerEndpoint(value = "/webSocket/{username}",
         encoders = MessageRepresentationEncoder.class, decoders = MessageRepresentationDecoder.class)
 public class MessagingSocket {
     private Logger logger = LoggerFactory.getInstance();
     private Session session;
-    public static Map<String, Set<MessagingSocket>> chatListeners = new ConcurrentHashMap<>();
-    public static Map<String, String> sessionToChatIdMapping = new ConcurrentHashMap<>();
     private MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
-
+    private UserSocketRegistry userSocketRegistry = UserSocketRegistry.createRegistry();
+    private SessionUserRegistry sessionUserRegistry = SessionUserRegistry.createRegistry();
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username, @PathParam("chatId") String chatId) {
+    public void onOpen(Session session, @PathParam("username") String username) {
         this.session = session;
         logger.log(LoggingType.INFO, "Started new session " + session.getId());
-        logger.log(LoggingType.INFO, username + " connected to " + chatId);
+        logger.log(LoggingType.INFO, username + " connected");
 
-        if (!chatListeners.containsKey(chatId)) {
-            chatListeners.put(chatId, new CopyOnWriteArraySet<>());
-        }
-        chatListeners.get(chatId).add(this);
-        sessionToChatIdMapping.put(session.getId(), chatId);
-
+        userSocketRegistry.addSessionForUser(this,username);
+        sessionUserRegistry.addSessionForUser(session,username);
     }
 
     @OnMessage //Allows the client to send message to the socket.
@@ -59,8 +50,9 @@ public class MessagingSocket {
 
     @OnClose
     public void onClose(Session session) {
-        final String chatId = sessionToChatIdMapping.get(session.getId());
-        chatListeners.get(chatId).removeIf(messagingSocket -> messagingSocket.session.getId().equals(session.getId()));
+        String user = sessionUserRegistry.getUserFor(session);
+        sessionUserRegistry.removeSession(session);
+        userSocketRegistry.removeUser(user);
     }
 
     @OnError
@@ -69,9 +61,12 @@ public class MessagingSocket {
     }
 
     public void broadcastToChat(MessageRepresentation message) {
-        for (MessagingSocket listener : chatListeners.get(message.chatId)) {
-            logger.log(LoggingType.INFO, "Broadcasting to " + listener.session.getId());
-            listener.sendMessage(message);
+        final List<MessagingSocket> sockets = messagingAPI.getUsersConnectedToChat(UUID.fromString(message.chatId)).stream().filter(user -> userSocketRegistry.hasSocketFor(user.getName()))
+                .map(user -> userSocketRegistry.getSocketFor(user.getName())).collect(Collectors.toList());
+        for (MessagingSocket messagingSocket : sockets) {
+            logger.log(LoggingType.INFO, "Broadcasting to " + messagingSocket.session.getId());
+            messagingSocket.sendMessage(message);
+
         }
     }
 

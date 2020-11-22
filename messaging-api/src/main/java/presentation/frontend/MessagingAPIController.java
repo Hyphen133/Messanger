@@ -37,21 +37,6 @@ public class MessagingAPIController {
         return "Running";
     }
 
-    //http://localhost:8080/writeMessage
-    /*
-    {
-	"chatId" : "5229ff98-2b23-4fa9-892c-55448f0c63c4",
-	"author" : "John" ,
-	"content" : "Hello"
-    }
-     */
-    @PostMapping("/writeMessage")
-    @ResponseStatus(value = OK)
-    public void writeMessage(@RequestBody WriteMessageRepresentation writeMessageRepresentation){
-        messagingAPI.write(WriteMessage.from(writeMessageRepresentation.chatId, writeMessageRepresentation.author, writeMessageRepresentation.content));
-    }
-
-
     //http://localhost:8080/createChat
     /*
     {
@@ -62,6 +47,13 @@ public class MessagingAPIController {
     @ResponseStatus(value = OK)
     public void createChat(@RequestBody ChatCreationRequestBody chatCreationRequestBody){
         messagingAPI.createChatFor(UUID.fromString(chatCreationRequestBody.chatId));
+    }
+
+    @PostMapping("/connectUserToChat")
+    @ResponseStatus(value = OK)
+    public void connectUserToChat(@RequestBody UserConnectToChatRequestBody userConnectToChatRequestBody){
+        messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, userConnectToChatRequestBody.chatId);
+
     }
 
 }
