@@ -48,19 +48,7 @@ public class MessagingSocket {
         broadcastToChat(messageRepresentation);
     }
 
-    @OnClose
-    public void onClose(Session session) {
-        String user = sessionUserRegistry.getUserFor(session);
-        sessionUserRegistry.removeSession(session);
-        userSocketRegistry.removeUser(user);
-    }
-
-    @OnError
-    public void onError(Session session, Throwable throwable) {
-        //Error
-    }
-
-    public void broadcastToChat(MessageRepresentation message) {
+    private void broadcastToChat(MessageRepresentation message) {
         final List<MessagingSocket> sockets = messagingAPI.getUsersConnectedToChat(UUID.fromString(message.chatId)).stream().filter(user -> userSocketRegistry.hasSocketFor(user.getName()))
                 .map(user -> userSocketRegistry.getSocketFor(user.getName())).collect(Collectors.toList());
         for (MessagingSocket messagingSocket : sockets) {
@@ -76,6 +64,18 @@ public class MessagingSocket {
         } catch (IOException | EncodeException e) {
             logger.log(LoggingType.ERROR, "Caught exception while sending message to Session Id: " + this.session.getId());
         }
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        String user = sessionUserRegistry.getUserFor(session);
+        sessionUserRegistry.removeSession(session);
+        userSocketRegistry.removeUser(user);
+    }
+
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        //Error
     }
 
 }
