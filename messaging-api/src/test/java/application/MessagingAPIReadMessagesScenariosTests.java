@@ -23,6 +23,7 @@ public class MessagingAPIReadMessagesScenariosTests {
 
         //Then
         Assert.assertEquals(4, messagesForChat.size());
+        Assert.assertFalse(true);
     }
 
     private Chat createChat() {
