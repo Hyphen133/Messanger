@@ -49,15 +49,48 @@ title __WEBSOCKETS's Class Diagram__\n
     namespace frontend {
       namespace websockets {
         class presentation.frontend.websockets.MessagingSocket {
-            {static} + chatListeners : Map<String, Set<MessagingSocket>>
-            {static} + sessionToChatIdMapping : Map<String, String>
             - session : Session
-            + broadcastToChat()
             + onClose()
             + onError()
             + onMessage()
             + onOpen()
+            - broadcastToChat()
             - sendMessage()
+        }
+      }
+    }
+  }
+  
+
+  namespace presentation {
+    namespace frontend {
+      namespace websockets {
+        class presentation.frontend.websockets.SessionUserRegistry {
+            {static} - instance : SessionUserRegistry
+            - sessionUserMap : Map<Session, String>
+            + addSessionForUser()
+            {static} + createRegistry()
+            + getUserFor()
+            + removeSession()
+            - SessionUserRegistry()
+        }
+      }
+    }
+  }
+  
+
+  namespace presentation {
+    namespace frontend {
+      namespace websockets {
+        class presentation.frontend.websockets.UserSocketRegistry {
+            {static} - instance : UserSocketRegistry
+            - userSocketMap : Map<String, MessagingSocket>
+            + addSessionForUser()
+            {static} + createRegistry()
+            + getSocketFor()
+            + hasSocketFor()
+            + removeUser()
+            - UserSocketRegistry()
         }
       }
     }
@@ -68,6 +101,8 @@ title __WEBSOCKETS's Class Diagram__\n
   presentation.frontend.websockets.MessageRepresentationEncoder .up.|> javax.websocket.Encoder.Text
   presentation.frontend.websockets.MessagingSocket o-- ports.Logger : logger
   presentation.frontend.websockets.MessagingSocket o-- application.MessagingAPI : messagingAPI
+  presentation.frontend.websockets.MessagingSocket o-- presentation.frontend.websockets.SessionUserRegistry : sessionUserRegistry
+  presentation.frontend.websockets.MessagingSocket o-- presentation.frontend.websockets.UserSocketRegistry : userSocketRegistry
 
 
 right footer

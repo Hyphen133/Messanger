@@ -62,6 +62,18 @@ title __MESSAGING-API's Class Diagram__\n
   }
   
 
+  namespace domain {
+    class domain.User {
+    }
+  }
+  
+
+  namespace domain {
+    class domain.UserAddedToChat {
+    }
+  }
+  
+
   namespace infrastructure {
     class infrastructure.ConsoleInfoLogger {
     }
@@ -166,6 +178,14 @@ title __MESSAGING-API's Class Diagram__\n
 
   namespace presentation {
     namespace frontend {
+      class presentation.frontend.UserConnectToChatRequestBody {
+      }
+    }
+  }
+  
+
+  namespace presentation {
+    namespace frontend {
       class presentation.frontend.WriteMessageRepresentation {
       }
     }
@@ -212,6 +232,26 @@ title __MESSAGING-API's Class Diagram__\n
   }
   
 
+  namespace presentation {
+    namespace frontend {
+      namespace websockets {
+        class presentation.frontend.websockets.SessionUserRegistry {
+        }
+      }
+    }
+  }
+  
+
+  namespace presentation {
+    namespace frontend {
+      namespace websockets {
+        class presentation.frontend.websockets.UserSocketRegistry {
+        }
+      }
+    }
+  }
+  
+
   application.StandardMessagingAPI .up.|> application.MessagingAPI
   application.StandardMessagingAPI o-- ports.MessageEventDispatcher : dispatcher
   application.StandardMessagingAPI o-- ports.ChatRepository : chatRepository
@@ -227,6 +267,8 @@ title __MESSAGING-API's Class Diagram__\n
   presentation.frontend.websockets.MessageRepresentationEncoder .up.|> javax.websocket.Encoder.Text
   presentation.frontend.websockets.MessagingSocket o-- ports.Logger : logger
   presentation.frontend.websockets.MessagingSocket o-- application.MessagingAPI : messagingAPI
+  presentation.frontend.websockets.MessagingSocket o-- presentation.frontend.websockets.SessionUserRegistry : sessionUserRegistry
+  presentation.frontend.websockets.MessagingSocket o-- presentation.frontend.websockets.UserSocketRegistry : userSocketRegistry
 
 
 right footer

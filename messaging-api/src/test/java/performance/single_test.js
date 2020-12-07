@@ -1,17 +1,16 @@
 const WebSocket = require('ws');
+const fs = require('fs');
 
 var user = process.argv[2]
 var chatId = process.argv[3]
 var num_messages = parseInt(process.argv[4])
 var sleep_time_ms = parseInt(process.argv[5])
+var log_path = process.argv[6]
 
 
 
-var log = console.log;
-
-console.log = function(){
-    log.apply(console, [Date.now()].concat(arguments));
-};
+let writeStream = fs.createWriteStream(log_path);
+writeStream.write("TEST for " + user + " and chat " + chatId +"\n")
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -34,11 +33,11 @@ async function connection(socket, timeout = 10000) {
     }
 }
 
-async function test(number_of_messages, break_between_messages) {
-    const websocket = new WebSocket('ws://localhost:8080/webSocket/Dan1112')
+async function test(number_of_messages, break_between_messages, filestream) {
+    const websocket = new WebSocket('ws://localhost:8080/webSocket/' + user)
 
     websocket.on('message', function incoming(data) {
-        log.call(console,new Date(),user + " recieved " + data + " chat: " + chatId  )
+        filestream.write("[" + new Date().toDateString(),"] Recieved: " + content + " chat: " + chatId + "\n")
     });
 
     const opened = await connection(websocket)
@@ -51,15 +50,17 @@ async function test(number_of_messages, break_between_messages) {
                 "author": user,
                 "content": content
             }))
-            log.call(console,new Date(),"Sent: " + content + " chat: " + chatId)
+
+            filestream.write("[" + new Date().toDateString(),"] Sent: " + content + " chat: " + chatId, "base64")
             await sleep(sleep_time_ms);
         }
 
     } else {
-        log.call(console,new Date(),"the socket is closed OR couldn't have the socket in time, program crashed")
+        writeStream.write("[" + new Date().toDateString(),"] Sent: " + content + " chat: " + chatId + +"\n")
         return
     }
     websocket.close()
 }
 
-test(num_messages, sleep_time_ms)
+test(num_messages, sleep_time_ms, writeStream)
+writeStream.close()
