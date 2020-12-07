@@ -56,7 +56,7 @@ async function test(number_of_messages, break_between_messages, filestream) {
         }
 
     } else {
-        writeStream.write("[" + new Date().toDateString(),"] Sent: " + content + " chat: " + chatId + +"\n")
+        writeStream.write("ERROR: NOT OPENED")
         return
     }
     websocket.close()
