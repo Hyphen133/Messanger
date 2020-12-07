@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionUserRegistry {
-    private Map<Session, String> sessionUserMap;
+    private Map<String, String> sessionIdToUserMap;
+    private Map<String, Session > idToSessionMap;
     private static SessionUserRegistry instance;
 
     private SessionUserRegistry() {
-        this.sessionUserMap = new ConcurrentHashMap<>();
+        this.sessionIdToUserMap = new ConcurrentHashMap<>();
+        this.idToSessionMap = new ConcurrentHashMap<>();
     }
 
     public static SessionUserRegistry createRegistry(){
@@ -20,18 +22,20 @@ public class SessionUserRegistry {
     }
 
     public void addSessionForUser(Session session, String user) {
-        if(sessionUserMap.containsKey(user)){
+        if(sessionIdToUserMap.containsKey(user)){
             throw new RuntimeException("Session already created for user " + user);
         }
-        sessionUserMap.put(session,user);
+        sessionIdToUserMap.put(session.getId(),user);
+        idToSessionMap.put(session.getId(), session);
     }
 
     public String getUserFor(final Session session) {
-        return sessionUserMap.get(session);
+        return sessionIdToUserMap.get(session.getId());
     }
 
     public void removeSession(final Session session) {
-        sessionUserMap.remove(session);
+        sessionIdToUserMap.remove(session.getId());
+        idToSessionMap.remove(session.getId());
     }
 }
 

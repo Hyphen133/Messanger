@@ -33,11 +33,15 @@ async function connection(socket, timeout = 10000) {
     }
 }
 
+function getMessage(type, content){
+    return "[" + new Date().toDateString() + "]" + type +": " + content + " chat: " + chatId + "\n"
+}
+
 async function test(number_of_messages, break_between_messages, filestream) {
     const websocket = new WebSocket('ws://localhost:8080/webSocket/' + user)
 
     websocket.on('message', function incoming(data) {
-        filestream.write("[" + new Date().toDateString(),"] Recieved: " + content + " chat: " + chatId + "\n")
+        console.log(getMessage("Recieved", ""))
     });
 
     const opened = await connection(websocket)
@@ -51,16 +55,22 @@ async function test(number_of_messages, break_between_messages, filestream) {
                 "content": content
             }))
 
-            filestream.write("[" + new Date().toDateString(),"] Sent: " + content + " chat: " + chatId, "base64")
+            let message = getMessage("Sent", content)
+            console.log(message)
+            // try {
+            //     writeStream.write(message)
+            // }catch (e){
+            //     console.log(e);
+            // }
             await sleep(sleep_time_ms);
         }
 
     } else {
-        writeStream.write("ERROR: NOT OPENED")
+        writeStream.write("ERROR on Opening Connection")
         return
     }
     websocket.close()
 }
 
-test(num_messages, sleep_time_ms, writeStream)
+test(num_messages, sleep_time_ms)
 writeStream.close()

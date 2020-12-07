@@ -69,6 +69,7 @@ public class MessagingSocket {
     @OnClose
     public void onClose(Session session) {
         String user = sessionUserRegistry.getUserFor(session);
+        logger.log(LoggingType.INFO, "User " +  user  + " with session " + this.session.getId() + " disconnected ");
         sessionUserRegistry.removeSession(session);
         userSocketRegistry.removeUser(user);
     }
