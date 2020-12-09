@@ -36,7 +36,7 @@ async function test(number_of_messages, break_between_messages, filestream) {
     const websocket = new WebSocket('ws://' + ip +':8080/webSocket/' + user)
 
     websocket.on('message', function incoming(data) {
-        console.log(getMessage("Received", ""))
+        console.log(getMessage("Received", data))
     });
 
     const opened = await connection(websocket)
