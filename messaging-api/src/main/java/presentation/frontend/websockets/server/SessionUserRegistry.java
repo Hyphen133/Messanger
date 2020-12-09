@@ -1,4 +1,4 @@
-package presentation.frontend.websockets;
+package presentation.frontend.websockets.server;
 
 import javax.websocket.Session;
 import java.util.Map;

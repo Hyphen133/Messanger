@@ -1,4 +1,4 @@
-package presentation.frontend.websockets;
+package presentation.frontend.websockets.server;
 
 
 public class MessageRepresentation {

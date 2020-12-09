@@ -4,10 +4,9 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Assert;
 import org.junit.Test;
-import presentation.frontend.websockets.MessageRepresentation;
-import presentation.frontend.websockets.MessagingSocket;
-import presentation.frontend.websockets.SessionUserRegistry;
-import presentation.frontend.websockets.UserSocketRegistry;
+import presentation.frontend.websockets.server.MessagingSocket;
+import presentation.frontend.websockets.server.SessionUserRegistry;
+import presentation.frontend.websockets.server.UserSocketRegistry;
 import javax.websocket.Session;
 import java.util.UUID;
 

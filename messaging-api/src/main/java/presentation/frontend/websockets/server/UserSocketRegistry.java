@@ -1,9 +1,6 @@
-package presentation.frontend.websockets;
+package presentation.frontend.websockets.server;
 
-import domain.User;
-import javax.websocket.Session;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserSocketRegistry {
