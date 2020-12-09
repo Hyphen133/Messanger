@@ -1,9 +1,10 @@
 const WebSocket = require('ws');
 
-var user = process.argv[2]
-var chatId = process.argv[3]
-var num_messages = parseInt(process.argv[4])
-var sleep_time_ms = parseInt(process.argv[5])
+var ip = process.argv[2]
+var user = process.argv[3]
+var chatId = process.argv[4]
+var num_messages = parseInt(process.argv[5])
+var sleep_time_ms = parseInt(process.argv[6])
 
 
 function sleep(ms) {
@@ -32,7 +33,7 @@ function getMessage(type, content){
 }
 
 async function test(number_of_messages, break_between_messages, filestream) {
-    const websocket = new WebSocket('ws://localhost:8080/webSocket/' + user)
+    const websocket = new WebSocket('ws://' + ip +':8080/webSocket/' + user)
 
     websocket.on('message', function incoming(data) {
         console.log(getMessage("Received", ""))

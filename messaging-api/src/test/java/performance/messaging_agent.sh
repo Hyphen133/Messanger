@@ -1,4 +1,12 @@
 #!/bin/bash
 
-curl -d '{"username" : "John2", "chatId" : "5229ff98-2b23-4fa9-892c-55448f0c63c4"}' -H 'Content-Type: application/json' localhost:8080/connectUserToChat
-node single_test.js John2 5229ff98-2b23-4fa9-892c-55448f0c63c4 100 1000 > john2.log 2>&1 &
+IP=$1
+USER=$2
+CHAT_ID=$3
+MSG_NUMBER=$4
+MSG_DELAY_MS=$5
+
+LOG_FILE=$USER.log
+
+curl -d '{"username" : "'$USER'", "chatId" : "'$CHAT_ID'"}' -H 'Content-Type: application/json' $IP:8080/connectUserToChat
+node single_test.js $IP $USER $CHAT_ID $MSG_NUMBER $MSG_DELAY_MS > $LOG_FILE 2>&1 &
