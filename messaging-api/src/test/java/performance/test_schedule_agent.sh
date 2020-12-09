@@ -1,4 +1,10 @@
 #!/bin/bash
 
-# -t format: [[CC]YY]MMDDhhmm[.ss]
-at -f ./test_messaging_agent.sh -t 202012091545
+USER=John2
+CHAT_ID=5229ff98-2b23-4fa9-892c-55448f0c63c4
+IP=localhost
+MSG_NUMBER=100
+MSG_DELAY_MS=1000
+TIME=202012092324
+
+./schedule_messaging_agent.sh $IP $USER $CHAT_ID $MSG_NUMBER $MSG_DELAY_MS $TIME
