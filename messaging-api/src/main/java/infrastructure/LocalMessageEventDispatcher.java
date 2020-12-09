@@ -3,6 +3,8 @@ package infrastructure;
 import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
+import domain.User;
+import domain.UserAddedToChat;
 import ports.MessageEventDispatcher;
 import domain.NewMessageReceived;
 
@@ -21,6 +23,12 @@ public class LocalMessageEventDispatcher implements MessageEventDispatcher {
     public void dispatch(final NewMessageReceived event) {
         final ChatMessage chatMessage = ChatMessage.from(Author.from(event.getAuthor()), event.getContent());
         chats.get(event.getChatId()).addMessage(chatMessage);
+    }
+
+    @Override
+    public void dispatch(final UserAddedToChat event) {
+        final User user = User.from(event.getUsername());
+        chats.get(event.getChatId()).connectUser(user);
     }
 
     @Override

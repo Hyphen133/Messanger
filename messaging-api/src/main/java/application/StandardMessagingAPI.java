@@ -1,6 +1,8 @@
 package application;
 
 import domain.Chat;
+import domain.User;
+import domain.UserAddedToChat;
 import ports.ChatRepository;
 import ports.MessageEventDispatcher;
 import domain.NewMessageReceived;
@@ -9,6 +11,7 @@ import infrastructure.LoggerFactory;
 import ports.LoggingType;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,5 +48,16 @@ final class StandardMessagingAPI implements MessagingAPI {
                 .stream()
                 .map(chatMessage-> ReadMessage.from(chatMessage.getAuthor().getNickname(),chatMessage.getContent()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void connectUserToChat(final String username, final UUID chatId) {
+        UserAddedToChat event = UserAddedToChat.from(username, chatId);
+        dispatcher.dispatch(event);
+    }
+
+    @Override
+    public Set<User> getUsersConnectedToChat(final UUID chatId) {
+        return chatRepository.getById(chatId).getConnectedUsers();
     }
 }

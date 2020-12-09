@@ -1,5 +1,6 @@
 package application;
 
+import domain.User;
 import infrastructure.LocalChatRepositoryFactory;
 import domain.Chat;
 import ports.ChatRepository;
@@ -57,4 +58,20 @@ public class MessagingAPIWriteMessageScenariosTests {
         Assert.assertNotEquals(null, chatRepository.getById(chatId));
     }
 
+    @Test
+    public void addUserToChat(){
+        //Given
+        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final String username = "John";
+        UUID chatId = UUID.randomUUID();
+        messagingAPI.createChatFor(chatId);
+
+        //When
+        messagingAPI.connectUserToChat(username, chatId);
+
+        //Then
+        Assert.assertEquals(1, messagingAPI.getUsersConnectedToChat(chatId).size());
+
+
+    }
 }

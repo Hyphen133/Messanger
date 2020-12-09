@@ -24,10 +24,20 @@ title __FRONTEND's Class Diagram__\n
   namespace presentation {
     namespace frontend {
       class presentation.frontend.MessagingAPIController {
+          + connectUserToChat()
           + createChat()
           + getMessagesForChat()
           + status()
-          + writeMessage()
+      }
+    }
+  }
+  
+
+  namespace presentation {
+    namespace frontend {
+      class presentation.frontend.UserConnectToChatRequestBody {
+          + chatId : String
+          + username : String
       }
     }
   }

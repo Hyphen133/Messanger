@@ -25,43 +25,27 @@ public class MessagingAPIController {
     @Autowired
     private MessagingAPI messagingAPI;
 
-    //http://localhost:8080/messagesForChat/5229ff98-2b23-4fa9-892c-55448f0c63c4
     @GetMapping("/messagesForChat/{id}")
     public List<ReadMessage> getMessagesForChat(@PathVariable("id") String chatId){
         return messagingAPI.getMessagesForChat(UUID.fromString(chatId));
     }
 
-    //http://localhost:8080/status
     @GetMapping("/status")
     public String status(){
         return "Running";
     }
 
-    //http://localhost:8080/writeMessage
-    /*
-    {
-	"chatId" : "5229ff98-2b23-4fa9-892c-55448f0c63c4",
-	"author" : "John" ,
-	"content" : "Hello"
-    }
-     */
-    @PostMapping("/writeMessage")
-    @ResponseStatus(value = OK)
-    public void writeMessage(@RequestBody WriteMessageRepresentation writeMessageRepresentation){
-        messagingAPI.write(WriteMessage.from(writeMessageRepresentation.chatId, writeMessageRepresentation.author, writeMessageRepresentation.content));
-    }
-
-
-    //http://localhost:8080/createChat
-    /*
-    {
-        "chatId" : "5229ff98-2b23-4fa9-892c-55448f0c63c4"
-    }
-     */
     @PostMapping("/createChat")
     @ResponseStatus(value = OK)
     public void createChat(@RequestBody ChatCreationRequestBody chatCreationRequestBody){
         messagingAPI.createChatFor(UUID.fromString(chatCreationRequestBody.chatId));
+    }
+
+    @PostMapping("/connectUserToChat")
+    @ResponseStatus(value = OK)
+    public void connectUserToChat(@RequestBody UserConnectToChatRequestBody userConnectToChatRequestBody){
+        messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, UUID.fromString(userConnectToChatRequestBody.chatId));
+
     }
 
 }
