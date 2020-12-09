@@ -1,9 +1,9 @@
 #!/bin/bash
 
 USER=John
-CHAT_ID=5229ff98-2b23-4fa9-892c-55448f0c63c4
+CHAT_IDS=5229ff98-2b23-4fa9-892c-55448f0c63c4
 IP=localhost
 MSG_NUMBER=100
 MSG_DELAY_MS=1000
 
-./messaging_agent.sh $IP $USER $CHAT_ID $MSG_NUMBER $MSG_DELAY_MS
+./messaging_agent.sh $IP $USER $CHAT_IDS $MSG_NUMBER $MSG_DELAY_MS

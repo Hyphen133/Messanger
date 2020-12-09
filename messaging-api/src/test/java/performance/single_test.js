@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 
 var ip = process.argv[2]
 var user = process.argv[3]
-var chatId = process.argv[4]
+var chatIds = process.argv[4].split(',')
 var num_messages = parseInt(process.argv[5])
 var sleep_time_ms = parseInt(process.argv[6])
 
@@ -29,7 +29,7 @@ async function connection(socket, timeout = 10000) {
 }
 
 function getMessage(type, content){
-    return "[" + new Date().toLocaleString() + "]" + type +": " + content + " chat: " + chatId
+    return "[" + new Date().toLocaleString() + "]" + type +": " + content
 }
 
 async function test(number_of_messages, break_between_messages, filestream) {
@@ -43,15 +43,19 @@ async function test(number_of_messages, break_between_messages, filestream) {
 
     if (opened) {
         for (i=0; i<number_of_messages; i++){
-            let content = i.toString() + " from " + user;
-            websocket.send(JSON.stringify({
-                "chatId": chatId,
-                "author": user,
-                "content": content
-            }))
 
-            let message = getMessage("Sent", content)
-            console.log(message)
+            for (const chatId of chatIds) {
+                let content = i.toString() + " from " + user;
+                let msg = JSON.stringify({
+                    "chatId": chatId,
+                    "author": user,
+                    "content": content
+                })
+                websocket.send(msg)
+
+                let message = getMessage("Sent", msg)
+                console.log(message)
+            }
 
             await sleep(sleep_time_ms);
         }
