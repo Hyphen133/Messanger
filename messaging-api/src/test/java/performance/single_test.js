@@ -29,7 +29,7 @@ async function connection(socket, timeout = 10000) {
 }
 
 function getMessage(type, content){
-    return "[" + new Date().toLocaleString() + "]" + type +": " + content
+    return "[" + new Date().getTime() + "]" + type +": " + content
 }
 
 async function test(number_of_messages, break_between_messages, filestream) {
@@ -64,6 +64,9 @@ async function test(number_of_messages, break_between_messages, filestream) {
         console.log("ERROR on Opening Connection")
         return
     }
+
+    //Wait 2.5 minutes
+    await sleep(150_000);
     websocket.close()
 }
 
