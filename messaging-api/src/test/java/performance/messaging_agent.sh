@@ -12,6 +12,7 @@ IFS=', ' read -ra chats <<< "$CHAT_IDS"
 
 for id in ${chats[@]}
 do
+    echo "Connecting $USER to chat $id"
     curl -d '{"username" : "'$USER'", "chatId" : "'$id'"}' -H 'Content-Type: application/json' $IP:8080/connectUserToChat
 done
 
