@@ -28,21 +28,29 @@ async function connection(socket, timeout = 10000) {
     }
 }
 
-function getMessage(type, content){
-    return "[" + new Date().getTime() + "]" + type +": " + content
+function getMessage(type, content) {
+    return "[" + new Date().getTime() + "]" + type + ": " + content
 }
 
-async function test(number_of_messages, break_between_messages, filestream) {
-    const websocket = new WebSocket('ws://' + ip +':8080/webSocket/' + user)
+async function test(number_of_messages, break_between_messages) {
+    const websocket = new WebSocket('ws://' + ip + ':8080/webSocket/' + user)
 
     websocket.on('message', function incoming(data) {
         console.log(getMessage("Received", data))
     });
 
+    websocket.on('close', function(data) {
+        console.log('Disconnected!!!! ' + data.toString());
+        // https://stackoverflow.com/questions/26971026/handling-connection-loss-with-websockets
+    });
+
     const opened = await connection(websocket)
 
+    //Wait 5 seconds
+    await sleep(5_000);
+
     if (opened) {
-        for (i=0; i<number_of_messages; i++){
+        for (i = 0; i < number_of_messages; i++) {
 
             for (const chatId of chatIds) {
                 let content = i.toString() + " from " + user;
@@ -57,7 +65,7 @@ async function test(number_of_messages, break_between_messages, filestream) {
                 console.log(message)
             }
 
-            await sleep(sleep_time_ms);
+            await sleep(break_between_messages);
         }
 
     } else {
@@ -65,8 +73,8 @@ async function test(number_of_messages, break_between_messages, filestream) {
         return
     }
 
-    //Wait 2.5 minutes
-    await sleep(150_000);
+    // Wait 1 minute
+    await sleep(60_000);
     websocket.close()
 }
 

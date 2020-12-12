@@ -50,8 +50,10 @@ public class MessagingSocket {
     private void broadcastToChat(MessageRepresentation message) {
         final List<MessagingSocket> sockets = messagingAPI.getUsersConnectedToChat(UUID.fromString(message.chatId)).stream().filter(user -> userSocketRegistry.hasSocketFor(user.getName()))
                 .map(user -> userSocketRegistry.getSocketFor(user.getName())).collect(Collectors.toList());
+
+        logger.log(LoggingType.INFO, "Starting broadcast of " + message.content + " from " + message.author + " for " + String.join(",",messagingAPI.getUsersConnectedToChat(UUID.fromString(message.chatId)).stream().map(x->x.getName()).collect(Collectors.toList())));
         for (MessagingSocket messagingSocket : sockets) {
-            logger.log(LoggingType.INFO, "Broadcasting to " + messagingSocket.session.getId());
+            logger.log(LoggingType.INFO, "Broadcasting message" + message.content + " to " + messagingSocket.session.getId());
             messagingSocket.sendMessage(message);
 
         }

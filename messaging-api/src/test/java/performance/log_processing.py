@@ -50,7 +50,7 @@ entries = []
 
 for filepath in log_files:
     with open(filepath, 'r') as f:
-        lines = f.readlines()
+        lines = [line for line in f.readlines() if not line.__contains__("Disconnected")]
         if len(lines) > 0:
             for line in lines:
                 entries.append(line_to_entry(line, filepath.replace(".log", "")))
