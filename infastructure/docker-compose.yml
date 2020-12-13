@@ -6,6 +6,6 @@ services:
     ports:
       - 7777:5432
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: messanger_user
       POSTGRES_DB: messaging
+      POSTGRES_USER: messenger_user
+      POSTGRES_PASSWORD: password
