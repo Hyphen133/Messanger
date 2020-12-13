@@ -1,7 +1,6 @@
 package presentation;
 
 import application.ChatRepositoryProvider;
-import infrastructure.ConsoleInfoLogger;
 import infrastructure.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;

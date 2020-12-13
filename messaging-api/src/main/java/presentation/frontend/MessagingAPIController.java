@@ -1,26 +1,22 @@
 package presentation.frontend;
 
+import static org.springframework.http.HttpStatus.OK;
+
 import application.MessagingAPI;
 import application.MessagingAPIFactory;
 import application.ReadMessage;
-import application.WriteMessage;
 import infrastructure.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ports.Logger;
 import ports.LoggingType;
-
 import java.util.List;
 import java.util.UUID;
-
-import static org.springframework.http.HttpStatus.OK;
 
 @CrossOrigin("*")
 @RestController
