@@ -13,7 +13,7 @@ title __FRONTEND's Class Diagram__\n
 
   namespace presentation {
     namespace frontend {
-      class presentation.frontend.MessagingAPIConfiguration {
+      class presentation.MessagingAPIConfiguration {
           + messagingAPI()
           + serverEndpointExporter()
       }

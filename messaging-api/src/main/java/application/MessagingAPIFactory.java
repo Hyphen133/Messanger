@@ -1,7 +1,7 @@
 package application;
 
-import infrastructure.LocalChatRepositoryFactory;
 import infrastructure.LocalMessageEventDispatcherFactory;
+
 
 public class MessagingAPIFactory {
 
@@ -12,7 +12,7 @@ public class MessagingAPIFactory {
 
     public static MessagingAPI createAPI(){
         if(instance == null){
-            instance = new StandardMessagingAPI(LocalChatRepositoryFactory.getInstance(), LocalMessageEventDispatcherFactory.getInstance());
+            instance = new StandardMessagingAPI(LocalMessageEventDispatcherFactory.getInstance());
         }
         return instance;
     }

@@ -1,6 +1,7 @@
 package presentation.frontend;
 
 import application.MessagingAPI;
+import application.MessagingAPIFactory;
 import application.ReadMessage;
 import application.WriteMessage;
 import infrastructure.LoggerFactory;
@@ -25,8 +26,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 public class MessagingAPIController {
 
-    @Autowired
-    private MessagingAPI messagingAPI;
+    private MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
     private Logger logger = LoggerFactory.getInstance();
 
     @GetMapping("/messagesForChat/{id}")
