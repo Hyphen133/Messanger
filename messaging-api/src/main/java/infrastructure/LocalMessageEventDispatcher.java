@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class LocalMessageEventDispatcher implements MessageEventDispatcher {
-    public Map<UUID, Chat> chats;
+    private Map<UUID, Chat> chats;
 
     public LocalMessageEventDispatcher() {
         chats = new HashMap<>();

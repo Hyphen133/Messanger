@@ -1,6 +1,8 @@
 package application;
 
+import domain.Author;
 import domain.Chat;
+import domain.ChatMessage;
 import domain.User;
 import domain.UserAddedToChat;
 import ports.ChatRepository;
@@ -29,6 +31,8 @@ final class StandardMessagingAPI implements MessagingAPI {
     public void write(final WriteMessage writeMessage) {
         logger.log(LoggingType.INFO, "Writing message " + writeMessage.toString());
         final NewMessageReceived event = NewMessageReceived.from(writeMessage);
+        //TODO -> duplication in dispatch
+        chatRepository.save(writeMessage.getChatId(), ChatMessage.from(Author.from(writeMessage.getAuthor()), writeMessage.getContent()));
         dispatcher.dispatch(event);
     }
 

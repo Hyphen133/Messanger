@@ -35,4 +35,9 @@ public class InMemoryChatRepository implements ChatRepository {
         }
         return this.chats.get(id);
     }
+
+    @Override
+    public void save(final UUID chatId, final ChatMessage chatMessage) {
+
+    }
 }

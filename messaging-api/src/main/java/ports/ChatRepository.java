@@ -9,4 +9,5 @@ public interface ChatRepository {
     List<ChatMessage> getMessagesFor(Chat chat);
     void add(Chat chat);
     Chat getById(UUID id);
+    void save(final UUID chatId, ChatMessage chatMessage);
 }

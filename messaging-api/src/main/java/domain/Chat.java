@@ -11,14 +11,18 @@ public class Chat {
     private final List<ChatMessage> messages;
     private final Set<User> users;
 
-    private Chat(final UUID id) {
+    private Chat(final UUID id, List<ChatMessage> messages) {
         this.id = id;
-        messages = new ArrayList<>();
-        users = new HashSet<>();
+        this.messages = messages;
+        this.users = new HashSet<>();
     }
 
     public static Chat from(final UUID chatId){
-        return new Chat(chatId);
+        return new Chat(chatId, new ArrayList<>());
+    }
+
+    public static Chat from(final UUID chatId, List<ChatMessage> messages){
+        return new Chat(chatId, messages);
     }
 
     public void addMessage(final ChatMessage message){

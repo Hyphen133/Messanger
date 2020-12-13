@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres
+#    restart: always
+    ports:
+      - 7777:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: messanger_user
+      POSTGRES_DB: messaging
