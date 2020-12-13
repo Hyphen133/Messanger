@@ -9,3 +9,7 @@ services:
       POSTGRES_DB: messaging
       POSTGRES_USER: messenger_user
       POSTGRES_PASSWORD: password
+#  messaging-api:
+#    build: messaging_api
+#    ports:
+#      - 8080:8080
