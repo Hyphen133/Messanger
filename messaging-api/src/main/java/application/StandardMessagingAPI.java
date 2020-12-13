@@ -30,9 +30,9 @@ final class StandardMessagingAPI implements MessagingAPI {
     @Override
     public void write(final WriteMessage writeMessage) {
         logger.log(LoggingType.INFO, "Writing message " + writeMessage.toString());
-        final NewMessageReceived event = NewMessageReceived.from(writeMessage);
-        //TODO -> duplication in dispatch
-        chatRepository.save(writeMessage.getChatId(), ChatMessage.from(Author.from(writeMessage.getAuthor()), writeMessage.getContent()));
+        final ChatMessage chatMessage = ChatMessage.from(Author.from(writeMessage.getAuthor()), writeMessage.getContent());
+        final NewMessageReceived event = NewMessageReceived.from(writeMessage.getChatId(),chatMessage);
+        chatRepository.save(writeMessage.getChatId(), chatMessage);
         dispatcher.dispatch(event);
     }
 

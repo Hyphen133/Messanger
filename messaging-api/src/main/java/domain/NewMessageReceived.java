@@ -6,32 +6,22 @@ import java.util.UUID;
 
 public class NewMessageReceived {
     private final UUID chatId;
-    private final String content;
-    private final String author;
+    private ChatMessage chatMessage;
 
-    public NewMessageReceived(final UUID chatId, final String author, final String content) {
+    public NewMessageReceived(final UUID chatId, final ChatMessage chatMessage) {
         this.chatId = chatId;
-        this.author = author;
-        this.content = content;
+        this.chatMessage = chatMessage;
     }
 
-    public static NewMessageReceived from(final UUID chatId, final String author, final String content) {
-        return new NewMessageReceived(chatId, author, content);
+    public static NewMessageReceived from(final UUID chatId, final ChatMessage chatMessage) {
+        return new NewMessageReceived(chatId,chatMessage);
     }
 
-    public static NewMessageReceived from(final WriteMessage writeMessage) {
-        return NewMessageReceived.from(writeMessage.getChatId(), writeMessage.getAuthor(), writeMessage.getContent());
+    public ChatMessage getChatMessage() {
+        return chatMessage;
     }
 
     public UUID getChatId() {
         return chatId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getAuthor() {
-        return author;
     }
 }
