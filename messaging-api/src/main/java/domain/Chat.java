@@ -41,6 +41,10 @@ public class Chat {
         users.add(user);
     }
 
+    public void disconnectUser(final User user) {
+        users.remove(user);
+    }
+
     public Set<User> getConnectedUsers() {
         return users;
     }

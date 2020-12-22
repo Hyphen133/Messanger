@@ -1,4 +1,4 @@
-package infrastructure;
+package infrastructure.persistance.hibernate;
 
 import domain.Author;
 import domain.ChatMessage;

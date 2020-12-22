@@ -81,25 +81,25 @@ title __MESSAGING-API's Class Diagram__\n
   
 
   namespace infrastructure {
-    class infrastructure.InMemoryChatRepository {
+    class infrastructure.local.InMemoryChatRepository {
     }
   }
   
 
   namespace infrastructure {
-    class infrastructure.LocalChatRepositoryFactory {
+    class infrastructure.local.LocalChatRepositoryFactory {
     }
   }
   
 
   namespace infrastructure {
-    class infrastructure.LocalMessageEventDispatcher {
+    class infrastructure.local.LocalMessageEventDispatcher {
     }
   }
   
 
   namespace infrastructure {
-    class infrastructure.LocalMessageEventDispatcherFactory {
+    class infrastructure.local.LocalMessageEventDispatcherFactory {
     }
   }
   
@@ -258,10 +258,10 @@ title __MESSAGING-API's Class Diagram__\n
   application.StandardMessagingAPI o-- ports.Logger : logger
   domain.ChatMessage o-- domain.Author : author
   infrastructure.ConsoleInfoLogger .up.|> ports.Logger
-  infrastructure.InMemoryChatRepository .up.|> ports.ChatRepository
-  infrastructure.LocalChatRepositoryFactory .up.|> ports.ChatRespositoryFactory
-  infrastructure.LocalMessageEventDispatcher .up.|> ports.MessageEventDispatcher
-  infrastructure.LocalMessageEventDispatcherFactory .up.|> ports.MessageEventDispatcherFactory
+  infrastructure.local.InMemoryChatRepository .up.|> ports.ChatRepository
+  infrastructure.local.LocalChatRepositoryFactory .up.|> ports.ChatRespositoryFactory
+  infrastructure.local.LocalMessageEventDispatcher .up.|> ports.MessageEventDispatcher
+  infrastructure.local.LocalMessageEventDispatcherFactory .up.|> ports.MessageEventDispatcherFactory
   presentation.frontend.MessagingAPIController o-- application.MessagingAPI : messagingAPI
   presentation.frontend.websockets.MessageRepresentationDecoder .up.|> javax.websocket.Decoder.Text
   presentation.frontend.websockets.MessageRepresentationEncoder .up.|> javax.websocket.Encoder.Text

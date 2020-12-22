@@ -1,6 +1,5 @@
-package infrastructure;
+package infrastructure.messaging.local;
 
-import infrastructure.LocalMessageEventDispatcher;
 import ports.MessageEventDispatcher;
 import ports.MessageEventDispatcherFactory;
 

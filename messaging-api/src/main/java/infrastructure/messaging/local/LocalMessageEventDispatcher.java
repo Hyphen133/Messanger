@@ -1,13 +1,10 @@
-package infrastructure;
+package infrastructure.messaging.local;
 
-import domain.Author;
 import domain.Chat;
-import domain.ChatMessage;
+import domain.NewMessageReceived;
 import domain.User;
 import domain.UserAddedToChat;
 import ports.MessageEventDispatcher;
-import domain.NewMessageReceived;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

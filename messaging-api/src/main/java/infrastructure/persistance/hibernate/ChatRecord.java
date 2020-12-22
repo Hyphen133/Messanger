@@ -1,4 +1,4 @@
-package infrastructure;
+package infrastructure.persistance.hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

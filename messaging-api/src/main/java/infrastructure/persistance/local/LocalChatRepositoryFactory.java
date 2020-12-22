@@ -1,7 +1,6 @@
-package infrastructure;
+package infrastructure.persistance.local;
 
 import ports.ChatRepository;
-import infrastructure.InMemoryChatRepository;
 import ports.ChatRespositoryFactory;
 
 public class LocalChatRepositoryFactory implements ChatRespositoryFactory {

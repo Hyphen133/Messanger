@@ -17,10 +17,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 final class StandardMessagingAPI implements MessagingAPI {
-    public final MessageEventDispatcher dispatcher;
+    private final MessageEventDispatcher dispatcher;
+    private final ChatRepository chatRepository;
     private final Logger logger = LoggerFactory.getInstance();
 
-    public StandardMessagingAPI(MessageEventDispatcher dispatcher) {
+    public StandardMessagingAPI(ChatRepository chatRepository, MessageEventDispatcher dispatcher) {
+        this.chatRepository = chatRepository;
         this.dispatcher = dispatcher;
     }
 
@@ -29,7 +31,7 @@ final class StandardMessagingAPI implements MessagingAPI {
         logger.log(LoggingType.INFO, "Writing message " + writeMessage.toString());
         final ChatMessage chatMessage = ChatMessage.from(Author.from(writeMessage.getAuthor()), writeMessage.getContent());
         final NewMessageReceived event = NewMessageReceived.from(writeMessage.getChatId(),chatMessage);
-        getChatRepository().save(writeMessage.getChatId(), chatMessage);
+        chatRepository.save(writeMessage.getChatId(), chatMessage);
         dispatcher.dispatch(event);
     }
 
@@ -37,18 +39,14 @@ final class StandardMessagingAPI implements MessagingAPI {
     public Chat createChatFor(final UUID chatId) {
         logger.log(LoggingType.INFO, "Creating chat with id " + chatId.toString());
         final Chat chat = Chat.from(chatId);
-        getChatRepository().add(chat);
+        chatRepository.add(chat);
         dispatcher.subscribe(chat);
         return chat;
     }
 
-    private ChatRepository getChatRepository() {
-        return ChatRepositoryProvider.getChatRepository();
-    }
-
     @Override
     public List<ReadMessage> getMessagesForChat(final UUID chatId) {
-        return getChatRepository().getById(chatId)
+        return chatRepository.getById(chatId)
                 .getMessages()
                 .stream()
                 .map(chatMessage-> ReadMessage.from(chatMessage.getAuthor().getNickname(),chatMessage.getContent()))
@@ -63,6 +61,6 @@ final class StandardMessagingAPI implements MessagingAPI {
 
     @Override
     public Set<User> getUsersConnectedToChat(final UUID chatId) {
-        return getChatRepository().getById(chatId).getConnectedUsers();
+        return chatRepository.getById(chatId).getConnectedUsers();
     }
 }

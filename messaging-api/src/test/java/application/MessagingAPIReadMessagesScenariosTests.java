@@ -4,7 +4,7 @@ import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
 import ports.ChatRepository;
-import infrastructure.LocalChatRepositoryFactory;
+import infrastructure.local.LocalChatRepositoryFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
