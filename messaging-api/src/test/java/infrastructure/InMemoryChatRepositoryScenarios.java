@@ -1,7 +1,7 @@
 package infrastructure;
 
 import domain.Chat;
-import infrastructure.local.InMemoryChatRepository;
+import infrastructure.persistance.local.InMemoryChatRepository;
 import org.junit.Assert;
 import org.junit.Test;
 
