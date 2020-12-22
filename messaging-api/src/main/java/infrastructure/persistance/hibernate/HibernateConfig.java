@@ -31,6 +31,8 @@ public class HibernateConfig {
 
         configuration.addAnnotatedClass(MessageRecord.class);
         configuration.addAnnotatedClass(ChatRecord.class);
+        configuration.addAnnotatedClass(UserRecord.class);
+        configuration.addAnnotatedClass(ChatUsersRecord.class);
 
         final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
