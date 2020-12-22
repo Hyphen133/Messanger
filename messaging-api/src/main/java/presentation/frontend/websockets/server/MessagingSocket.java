@@ -36,7 +36,7 @@ public class MessagingSocket {
         logger.log(LoggingType.INFO, "Started new session " + session.getId());
         logger.log(LoggingType.INFO, username + " connected");
 
-        userSocketRegistry.addSessionForUser(this,username);
+        userSocketRegistry.addSocketForUser(this,username);
         sessionUserRegistry.addSessionForUser(session,username);
     }
 
@@ -60,11 +60,7 @@ public class MessagingSocket {
     }
 
     private void sendMessage(MessageRepresentation message) {
-        try {
-            this.session.getBasicRemote().sendObject(message);
-        } catch (IOException | EncodeException e) {
-            logger.log(LoggingType.ERROR, "Caught exception while sending message to Session Id: " + this.session.getId());
-        }
+        this.session.getAsyncRemote().sendObject(message);
     }
 
     @OnClose
@@ -77,7 +73,8 @@ public class MessagingSocket {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        //Error
+        logger.log(LoggingType.ERROR, "Error for " + session.getId() + " caused by: " + throwable.getMessage());
+        throwable.printStackTrace();
     }
 
 }

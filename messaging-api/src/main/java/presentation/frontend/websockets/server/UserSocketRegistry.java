@@ -18,7 +18,7 @@ public class UserSocketRegistry {
         return instance;
     }
 
-    public void addSessionForUser(MessagingSocket socket, String user) {
+    public void addSocketForUser(MessagingSocket socket, String user) {
         if(userSocketMap.containsKey(user)){
             throw new RuntimeException("Session already created for user " + user);
         }
