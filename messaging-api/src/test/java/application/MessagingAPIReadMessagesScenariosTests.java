@@ -3,11 +3,10 @@ package application;
 import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
-import ports.ChatRepository;
-import infrastructure.local.LocalChatRepositoryFactory;
+import infrastructure.persistance.local.LocalChatRepositoryFactory;
 import org.junit.Assert;
 import org.junit.Test;
-
+import ports.ChatRepository;
 import java.util.List;
 import java.util.UUID;
 

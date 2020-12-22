@@ -1,7 +1,7 @@
 package application;
 
-import infrastructure.local.LocalChatRepositoryFactory;
 import domain.Chat;
+import infrastructure.persistance.local.LocalChatRepositoryFactory;
 import ports.ChatRepository;
 import org.junit.Assert;
 import org.junit.Test;
