@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionUserRegistry {
-    private Map<String, String> sessionIdToUserMap;
-    private Map<String, Session > idToSessionMap;
+    private final Map<String, String> sessionIdToUserMap;
+    private final Map<String, Session > idToSessionMap;
     private static SessionUserRegistry instance;
 
     private SessionUserRegistry() {
@@ -21,7 +21,7 @@ public class SessionUserRegistry {
         return instance;
     }
 
-    public void addSessionForUser(Session session, String user) {
+    public void addSessionForUser(final Session session, final String user) {
         if(sessionIdToUserMap.containsKey(user)){
             throw new RuntimeException("Session already created for user " + user);
         }

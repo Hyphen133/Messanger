@@ -7,20 +7,20 @@ import javax.websocket.EndpointConfig;
 
 public class MessageRepresentationDecoder implements Decoder.Text<MessageRepresentation> {
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @Override
-    public MessageRepresentation decode(String s) throws DecodeException {
+    public MessageRepresentation decode(final String s) throws DecodeException {
         return gson.fromJson(s, MessageRepresentation.class);
     }
 
     @Override
-    public boolean willDecode(String s) {
+    public boolean willDecode(final String s) {
         return (s != null);
     }
 
     @Override
-    public void init(EndpointConfig endpointConfig) {
+    public void init(final EndpointConfig endpointConfig) {
         // Custom initialization logic
     }
 

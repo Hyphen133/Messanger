@@ -24,14 +24,14 @@ import java.util.stream.Collectors;
 @ServerEndpoint(value = "/webSocket/{username}",
         encoders = MessageRepresentationEncoder.class, decoders = MessageRepresentationDecoder.class)
 public class MessagingSocket {
-    private Logger logger = LoggerFactory.getInstance();
+    private final Logger logger = LoggerFactory.getInstance();
     private Session session;
-    private MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
-    private UserSocketRegistry userSocketRegistry = UserSocketRegistry.createRegistry();
-    private SessionUserRegistry sessionUserRegistry = SessionUserRegistry.createRegistry();
+    private final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+    private final UserSocketRegistry userSocketRegistry = UserSocketRegistry.createRegistry();
+    private final SessionUserRegistry sessionUserRegistry = SessionUserRegistry.createRegistry();
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) {
+    public void onOpen(final Session session, @PathParam("username") final String username) {
         this.session = session;
         logger.log(LoggingType.INFO, "Started new session " + session.getId());
         logger.log(LoggingType.INFO, username + " connected");
@@ -41,38 +41,37 @@ public class MessagingSocket {
     }
 
     @OnMessage //Allows the client to send message to the socket.
-    public void onMessage(MessageRepresentation messageRepresentation) {
+    public void onMessage(final MessageRepresentation messageRepresentation) {
         logger.log(LoggingType.INFO, "Received " + messageRepresentation.toString());
         messagingAPI.write(WriteMessage.from(UUID.fromString(messageRepresentation.chatId), messageRepresentation.author, messageRepresentation.content));
         broadcastToChat(messageRepresentation);
     }
 
-    private void broadcastToChat(MessageRepresentation message) {
+    private void broadcastToChat(final MessageRepresentation message) {
         final List<MessagingSocket> sockets = messagingAPI.getUsersConnectedToChat(UUID.fromString(message.chatId)).stream().filter(user -> userSocketRegistry.hasSocketFor(user.getName()))
                 .map(user -> userSocketRegistry.getSocketFor(user.getName())).collect(Collectors.toList());
 
         logger.log(LoggingType.INFO, "Starting broadcast of " + message.content + " from " + message.author + " for " + String.join(",",messagingAPI.getUsersConnectedToChat(UUID.fromString(message.chatId)).stream().map(x->x.getName()).collect(Collectors.toList())));
-        for (MessagingSocket messagingSocket : sockets) {
+        for (final MessagingSocket messagingSocket : sockets) {
             logger.log(LoggingType.INFO, "Broadcasting message" + message.content + " to " + messagingSocket.session.getId());
             messagingSocket.sendMessage(message);
-
         }
     }
 
-    private void sendMessage(MessageRepresentation message) {
+    private void sendMessage(final MessageRepresentation message) {
         this.session.getAsyncRemote().sendObject(message);
     }
 
     @OnClose
-    public void onClose(Session session) {
-        String user = sessionUserRegistry.getUserFor(session);
+    public void onClose(final Session session) {
+        final String user = sessionUserRegistry.getUserFor(session);
         logger.log(LoggingType.INFO, "User " +  user  + " with session " + this.session.getId() + " disconnected ");
         sessionUserRegistry.removeSession(session);
         userSocketRegistry.removeUser(user);
     }
 
     @OnError
-    public void onError(Session session, Throwable throwable) {
+    public void onError(final Session session, final Throwable throwable) {
         logger.log(LoggingType.ERROR, "Error for " + session.getId() + " caused by: " + throwable.getMessage());
         throwable.printStackTrace();
     }

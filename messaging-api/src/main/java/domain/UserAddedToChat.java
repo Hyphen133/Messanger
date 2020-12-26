@@ -3,8 +3,8 @@ package domain;
 import java.util.UUID;
 
 public class UserAddedToChat {
-    private String username;
-    private UUID chatId;
+    private final String username;
+    private final UUID chatId;
 
     private UserAddedToChat(final String username, final UUID chatId) {
         this.username = username;

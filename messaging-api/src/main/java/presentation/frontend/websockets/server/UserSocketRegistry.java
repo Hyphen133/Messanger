@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserSocketRegistry {
-    private Map<String, MessagingSocket> userSocketMap;
+    private final Map<String, MessagingSocket> userSocketMap;
     private static UserSocketRegistry instance;
 
     private UserSocketRegistry() {
@@ -18,7 +18,7 @@ public class UserSocketRegistry {
         return instance;
     }
 
-    public void addSocketForUser(MessagingSocket socket, String user) {
+    public void addSocketForUser(final MessagingSocket socket, final String user) {
         if(userSocketMap.containsKey(user)){
             throw new RuntimeException("Session already created for user " + user);
         }

@@ -5,25 +5,21 @@ import domain.Chat;
 import domain.ChatMessage;
 import domain.NewMessageReceived;
 import domain.User;
-import domain.UserAddedToChat;
 import infrastructure.LoggerFactory;
 import ports.ChatRepository;
 import ports.Logger;
 import ports.LoggingType;
-import ports.MessageEventDispatcher;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 final class StandardMessagingAPI implements MessagingAPI {
-    private final MessageEventDispatcher dispatcher;
     private final ChatRepository chatRepository;
     private final Logger logger = LoggerFactory.getInstance();
 
-    public StandardMessagingAPI(ChatRepository chatRepository, MessageEventDispatcher dispatcher) {
+    public StandardMessagingAPI(final ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
-        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -32,7 +28,6 @@ final class StandardMessagingAPI implements MessagingAPI {
         final ChatMessage chatMessage = ChatMessage.from(Author.from(writeMessage.getAuthor()), writeMessage.getContent());
         final NewMessageReceived event = NewMessageReceived.from(writeMessage.getChatId(),chatMessage);
         chatRepository.save(writeMessage.getChatId(), chatMessage);
-        dispatcher.dispatch(event);
     }
 
     @Override
@@ -40,7 +35,6 @@ final class StandardMessagingAPI implements MessagingAPI {
         logger.log(LoggingType.INFO, "Creating chat with id " + chatId.toString());
         final Chat chat = Chat.from(chatId);
         chatRepository.add(chat);
-        dispatcher.subscribe(chat);
         return chat;
     }
 
@@ -49,14 +43,16 @@ final class StandardMessagingAPI implements MessagingAPI {
         return chatRepository.getById(chatId)
                 .getMessages()
                 .stream()
-                .map(chatMessage-> ReadMessage.from(chatMessage.getAuthor().getNickname(),chatMessage.getContent()))
+                .map(ReadMessage::from)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void connectUserToChat(final String username, final UUID chatId) {
-        UserAddedToChat event = UserAddedToChat.from(username, chatId);
-        dispatcher.dispatch(event);
+    public List<ReadMessage> connectUserToChat(final String username, final UUID chatId) {
+        return chatRepository.getMessagesFor(chatId)
+                .stream()
+                .map(ReadMessage::from)
+                .collect(Collectors.toList());
     }
 
     @Override

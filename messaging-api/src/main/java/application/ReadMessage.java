@@ -1,5 +1,7 @@
 package application;
 
+import domain.ChatMessage;
+
 public class ReadMessage {
 
     private final String author;
@@ -12,6 +14,10 @@ public class ReadMessage {
 
     public static ReadMessage from(final String author, final String content) {
         return new ReadMessage(author, content);
+    }
+
+    public static ReadMessage from(final ChatMessage chatMessage) {
+        return new ReadMessage(chatMessage.getAuthor().getNickname(), chatMessage.getContent());
     }
 
     public String getAuthor() {

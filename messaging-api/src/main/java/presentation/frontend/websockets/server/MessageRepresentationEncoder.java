@@ -7,15 +7,15 @@ import javax.websocket.EndpointConfig;
 
 public class MessageRepresentationEncoder implements Encoder.Text<MessageRepresentation> {
 
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @Override
-    public String encode(MessageRepresentation messageRepresentation) throws EncodeException {
+    public String encode(final MessageRepresentation messageRepresentation) throws EncodeException {
         return gson.toJson(messageRepresentation);
     }
 
     @Override
-    public void init(EndpointConfig endpointConfig) {
+    public void init(final EndpointConfig endpointConfig) {
         // Custom initialization logic
     }
 

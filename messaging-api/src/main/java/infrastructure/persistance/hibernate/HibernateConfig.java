@@ -18,7 +18,7 @@ public class HibernateConfig {
     }
 
     private static void createSessionFactory() {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.put(Environment.DRIVER, "org.postgresql.Driver");
         properties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
         properties.put(Environment.URL, "jdbc:postgresql://localhost:7777/messaging");
@@ -26,7 +26,7 @@ public class HibernateConfig {
         properties.put(Environment.PASS, "password");
         properties.put(Environment.HBM2DDL_AUTO, "create");
 
-        Configuration configuration = new Configuration();
+        final Configuration configuration = new Configuration();
         configuration.setProperties(properties);
 
         configuration.addAnnotatedClass(MessageRecord.class);

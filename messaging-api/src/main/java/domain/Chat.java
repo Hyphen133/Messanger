@@ -11,7 +11,7 @@ public class Chat {
     private final List<ChatMessage> messages;
     private final Set<User> users;
 
-    private Chat(final UUID id, List<ChatMessage> messages) {
+    private Chat(final UUID id, final List<ChatMessage> messages) {
         this.id = id;
         this.messages = messages;
         this.users = new HashSet<>();
@@ -21,7 +21,7 @@ public class Chat {
         return new Chat(chatId, new ArrayList<>());
     }
 
-    public static Chat from(final UUID chatId, List<ChatMessage> messages){
+    public static Chat from(final UUID chatId, final List<ChatMessage> messages){
         return new Chat(chatId, messages);
     }
 

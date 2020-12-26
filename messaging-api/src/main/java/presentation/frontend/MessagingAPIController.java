@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 import application.MessagingAPI;
 import application.MessagingAPIFactory;
 import application.ReadMessage;
+import domain.ChatMessage;
 import infrastructure.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +18,17 @@ import ports.Logger;
 import ports.LoggingType;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
 public class MessagingAPIController {
 
-    private MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
-    private Logger logger = LoggerFactory.getInstance();
+    private final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+    private final Logger logger = LoggerFactory.getInstance();
 
     @GetMapping("/messagesForChat/{id}")
-    public List<ReadMessage> getMessagesForChat(@PathVariable("id") String chatId){
+    public List<ReadMessage> getMessagesForChat(@PathVariable("id") final String chatId){
         return messagingAPI.getMessagesForChat(UUID.fromString(chatId));
     }
 
@@ -37,15 +39,15 @@ public class MessagingAPIController {
 
     @PostMapping("/createChat")
     @ResponseStatus(value = OK)
-    public void createChat(@RequestBody ChatCreationRequestBody chatCreationRequestBody){
+    public void createChat(@RequestBody final ChatCreationRequestBody chatCreationRequestBody){
         messagingAPI.createChatFor(UUID.fromString(chatCreationRequestBody.chatId));
     }
 
     @PostMapping("/connectUserToChat")
     @ResponseStatus(value = OK)
-    public void connectUserToChat(@RequestBody UserConnectToChatRequestBody userConnectToChatRequestBody){
+    public List<ReadMessage> connectUserToChat(@RequestBody final UserConnectToChatRequestBody userConnectToChatRequestBody){
         logger.log(LoggingType.INFO, "User " + userConnectToChatRequestBody.username + " connected to chat " + userConnectToChatRequestBody.chatId);
-        messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, UUID.fromString(userConnectToChatRequestBody.chatId));
+        return messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, UUID.fromString(userConnectToChatRequestBody.chatId));
     }
 }
 

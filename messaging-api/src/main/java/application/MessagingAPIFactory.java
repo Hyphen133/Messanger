@@ -1,15 +1,13 @@
 package application;
 
 
-import infrastructure.messaging.local.LocalMessageEventDispatcherFactory;
 import infrastructure.persistance.hibernate.HibernateChatRepositoryFactory;
-import infrastructure.persistance.hibernate.HibernateConfig;
 import infrastructure.persistance.local.LocalChatRepositoryFactory;
 
 public class MessagingAPIFactory {
 
     private static MessagingAPI instance = null;
-    private static ApplicationProfile profile = ApplicationProfile.PRODUCTION;
+    private static final ApplicationProfile profile = ApplicationProfile.PRODUCTION;
 
     private MessagingAPIFactory() {
     }
@@ -18,9 +16,9 @@ public class MessagingAPIFactory {
         if(instance == null){
             switch (profile){
                 case PRODUCTION:
-                    instance = new StandardMessagingAPI(HibernateChatRepositoryFactory.getInstance(), LocalMessageEventDispatcherFactory.getInstance());
+                    instance = new StandardMessagingAPI(HibernateChatRepositoryFactory.getInstance());
                 case TESTING:
-                    instance = new StandardMessagingAPI(LocalChatRepositoryFactory.getInstance(),LocalMessageEventDispatcherFactory.getInstance());
+                    instance = new StandardMessagingAPI(LocalChatRepositoryFactory.getInstance());
             }
         }
         return instance;

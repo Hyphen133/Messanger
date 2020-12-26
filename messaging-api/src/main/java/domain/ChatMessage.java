@@ -1,7 +1,7 @@
 package domain;
 
 public class ChatMessage {
-    private Author author;
+    private final Author author;
     private final String content;
 
     private ChatMessage(final Author author, final String content) {

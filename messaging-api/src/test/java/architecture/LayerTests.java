@@ -13,15 +13,15 @@ public class LayerTests {
 
     @Test
     public void domainClassesShouldBeFreeOfCycles() {
-        JavaClasses importedClasses = new ClassFileImporter().importPackages("domain");
+        final JavaClasses importedClasses = new ClassFileImporter().importPackages("domain");
 
-        ArchRule rule = slices().matching("domain.(*)..").should().beFreeOfCycles();
+        final ArchRule rule = slices().matching("domain.(*)..").should().beFreeOfCycles();
         rule.check(importedClasses);
     }
 
     @Test
     public void domainDrivenDesignLayerTest(){
-        JavaClasses importedClasses = new ClassFileImporter().importPackages("infrastructure", "domain","ports", "application", "presentation");
+        final JavaClasses importedClasses = new ClassFileImporter().importPackages("infrastructure", "domain","ports", "application", "presentation");
 
         final Architectures.LayeredArchitecture layeredArchitecture = layeredArchitecture()
                 .layer("Presentation").definedBy("presentation..")

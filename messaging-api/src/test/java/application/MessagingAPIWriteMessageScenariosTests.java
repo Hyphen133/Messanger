@@ -46,9 +46,9 @@ public class MessagingAPIWriteMessageScenariosTests {
     @Test
     public void createNewChatShouldBePersisted(){
         //Given
-        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
-        ChatRepository chatRepository = LocalChatRepositoryFactory.getInstance();
-        UUID chatId = UUID.randomUUID();
+        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final ChatRepository chatRepository = LocalChatRepositoryFactory.getInstance();
+        final UUID chatId = UUID.randomUUID();
 
         //When
         messagingAPI.createChatFor(chatId);
@@ -60,9 +60,9 @@ public class MessagingAPIWriteMessageScenariosTests {
     @Test
     public void addUserToChat(){
         //Given
-        MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
         final String username = "John";
-        UUID chatId = UUID.randomUUID();
+        final UUID chatId = UUID.randomUUID();
         messagingAPI.createChatFor(chatId);
 
         //When

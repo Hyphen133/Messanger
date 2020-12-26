@@ -14,13 +14,13 @@ public class WebSocketTests {
     @Test
     public void shouldRemoveUsersOnClosingConnection(){
         //Given
-        MessagingSocket socket = new MessagingSocket();
-        String sessionId = UUID.randomUUID().toString();
+        final MessagingSocket socket = new MessagingSocket();
+        final String sessionId = UUID.randomUUID().toString();
 
-        Session session = mock(Session.class);
+        final Session session = mock(Session.class);
         when(session.getId()).thenReturn(sessionId);
 
-        Session session1 = mock(Session.class);
+        final Session session1 = mock(Session.class);
         when(session1.getId()).thenReturn(sessionId);
 
 

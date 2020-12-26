@@ -30,7 +30,7 @@ public class InMemoryChatRepositoryScenarios {
         boolean wasCaught = false;
         try{
             chatRepository.getById(UUID.randomUUID());
-        }catch (RuntimeException e){
+        }catch (final RuntimeException e){
             wasCaught = true;
         }
 

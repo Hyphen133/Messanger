@@ -1,6 +1,7 @@
 package application;
 
 import domain.Chat;
+import domain.ChatMessage;
 import domain.User;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface MessagingAPI {
 
     List<ReadMessage> getMessagesForChat(UUID chatId);
 
-    void connectUserToChat(String username, UUID chatId);
+    List<ReadMessage> connectUserToChat(String username, UUID chatId);
 
     Set<User> getUsersConnectedToChat(UUID chatId);
 }

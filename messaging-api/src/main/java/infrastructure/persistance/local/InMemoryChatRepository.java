@@ -9,15 +9,15 @@ import java.util.Map;
 import java.util.UUID;
 
 public class InMemoryChatRepository implements ChatRepository {
-    private Map<UUID, Chat> chats;
+    private final Map<UUID, Chat> chats;
 
     public InMemoryChatRepository() {
         chats = new HashMap<>();
     }
 
     @Override
-    public List<ChatMessage> getMessagesFor(final Chat chat) {
-        return chat.getMessages();
+    public List<ChatMessage> getMessagesFor(final UUID chatId) {
+        return chats.get(chatId).getMessages();
     }
 
     @Override
@@ -37,17 +37,6 @@ public class InMemoryChatRepository implements ChatRepository {
 
     @Override
     public void save(final UUID chatId, final ChatMessage chatMessage) {
-
+        chats.get(chatId).addMessage(chatMessage);
     }
-
-//    @Override
-//    public void addUserToChat(Chat chat, User user){
-//
-//    }
-//
-//    @Override
-//    public void removeUserFromChat(Chat chat, User user){
-//
-//    }
-
 }

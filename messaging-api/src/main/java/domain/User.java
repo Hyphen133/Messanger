@@ -3,13 +3,13 @@ package domain;
 import java.util.Objects;
 
 public class User {
-    private String name;
+    private final String name;
 
     private User(final String name) {
         this.name = name;
     }
 
-    public static User from(String username){
+    public static User from(final String username){
         return new User(username);
     }
 

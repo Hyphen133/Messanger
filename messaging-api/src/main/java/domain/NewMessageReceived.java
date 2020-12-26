@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class NewMessageReceived {
     private final UUID chatId;
-    private ChatMessage chatMessage;
+    private final ChatMessage chatMessage;
 
     public NewMessageReceived(final UUID chatId, final ChatMessage chatMessage) {
         this.chatId = chatId;
