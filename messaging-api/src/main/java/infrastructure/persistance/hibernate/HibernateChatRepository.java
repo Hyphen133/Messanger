@@ -3,10 +3,17 @@ package infrastructure.persistance.hibernate;
 import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
+import domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import ports.ChatRepository;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -35,10 +42,20 @@ public class HibernateChatRepository implements ChatRepository {
     }
 
     @Override
-    public Chat getById(final UUID id) {
+    public Chat getById(final UUID chatId) {
         try(final Session session = sessionFactory.openSession()){
-//            final ChatRecord chatRecord = session.get(ChatRecord.class, id);
-            final Chat chat = Chat.from(id, queryMessagesForChat(session,id));
+            final Chat chat = Chat.from(chatId, queryMessagesForChat(session,chatId));
+
+            final Optional<ChatUsersRecord> chatUsersRecordOptional = getChatUsersRecords(session, chatId);
+
+            if(chatUsersRecordOptional.isPresent()){
+                final ChatUsersRecord chatUsersRecord = chatUsersRecordOptional.get();
+
+                for (UserRecord user : chatUsersRecord.users) {
+                    chat.connectUser(User.from(user.name));
+                }
+            }
+
             return chat;
         }
     }
@@ -53,5 +70,33 @@ public class HibernateChatRepository implements ChatRepository {
 
             session.save(messageRecord);
         }
+    }
+
+    @Override
+    public void addUserToChat(final User user, final UUID chatId) {
+        try(final Session session = sessionFactory.openSession()){
+            final Optional<ChatUsersRecord> resultList = getChatUsersRecords(session, chatId);
+
+            if(!resultList.isPresent()){
+                ChatUsersRecord chatUsersRecord = new ChatUsersRecord();
+                chatUsersRecord.chatId = chatId;
+                UserRecord userRecord = new UserRecord();
+                userRecord.name = user.getName();
+                chatUsersRecord.users = Collections.singletonList(userRecord);
+                session.save(userRecord);
+                session.save(chatUsersRecord);
+            }
+        }
+    }
+
+    private Optional<ChatUsersRecord> getChatUsersRecords(final Session session, final UUID chatId) {
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        final CriteriaQuery<ChatUsersRecord> cr = criteriaBuilder.createQuery(ChatUsersRecord.class);
+        final Root<ChatUsersRecord> root = cr.from(ChatUsersRecord.class);
+        cr.select(root).where(criteriaBuilder.equal(root.get("chatId"), chatId));
+        final Query<ChatUsersRecord> query = session.createQuery(cr);
+        query.setMaxResults(1);
+        final List<ChatUsersRecord> resultList = query.getResultList();
+        return resultList.stream().findFirst();
     }
 }

@@ -14,7 +14,7 @@ public class MessagingAPIReadMessagesScenariosTests {
     @Test
     public void shouldReadMessagesForExistingChat(){
         //Given
-        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = TestMessagingAPIFactory.createTestAPI();
         final Chat chat = createChat();
 
         //When

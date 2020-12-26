@@ -3,7 +3,6 @@ package application;
 import domain.Author;
 import domain.Chat;
 import domain.ChatMessage;
-import domain.NewMessageReceived;
 import domain.User;
 import infrastructure.LoggerFactory;
 import ports.ChatRepository;
@@ -26,7 +25,6 @@ final class StandardMessagingAPI implements MessagingAPI {
     public void write(final WriteMessage writeMessage) {
         logger.log(LoggingType.INFO, "Writing message " + writeMessage.toString());
         final ChatMessage chatMessage = ChatMessage.from(Author.from(writeMessage.getAuthor()), writeMessage.getContent());
-        final NewMessageReceived event = NewMessageReceived.from(writeMessage.getChatId(),chatMessage);
         chatRepository.save(writeMessage.getChatId(), chatMessage);
     }
 
@@ -48,11 +46,8 @@ final class StandardMessagingAPI implements MessagingAPI {
     }
 
     @Override
-    public List<ReadMessage> connectUserToChat(final String username, final UUID chatId) {
-        return chatRepository.getMessagesFor(chatId)
-                .stream()
-                .map(ReadMessage::from)
-                .collect(Collectors.toList());
+    public void connectUserToChat(final String username, final UUID chatId) {
+        chatRepository.addUserToChat(User.from(username), chatId);
     }
 
     @Override

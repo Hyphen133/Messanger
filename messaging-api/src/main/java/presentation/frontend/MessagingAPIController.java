@@ -2,6 +2,7 @@ package presentation.frontend;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import application.ApplicationProfile;
 import application.MessagingAPI;
 import application.MessagingAPIFactory;
 import application.ReadMessage;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 public class MessagingAPIController {
 
-    private final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+    private final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI(ApplicationProfile.PRODUCTION);
     private final Logger logger = LoggerFactory.getInstance();
 
     @GetMapping("/messagesForChat/{id}")
@@ -45,9 +46,9 @@ public class MessagingAPIController {
 
     @PostMapping("/connectUserToChat")
     @ResponseStatus(value = OK)
-    public List<ReadMessage> connectUserToChat(@RequestBody final UserConnectToChatRequestBody userConnectToChatRequestBody){
+    public void connectUserToChat(@RequestBody final UserConnectToChatRequestBody userConnectToChatRequestBody){
         logger.log(LoggingType.INFO, "User " + userConnectToChatRequestBody.username + " connected to chat " + userConnectToChatRequestBody.chatId);
-        return messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, UUID.fromString(userConnectToChatRequestBody.chatId));
+        messagingAPI.connectUserToChat(userConnectToChatRequestBody.username, UUID.fromString(userConnectToChatRequestBody.chatId));
     }
 }
 

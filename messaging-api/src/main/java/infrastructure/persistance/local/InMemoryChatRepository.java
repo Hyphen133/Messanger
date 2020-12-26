@@ -2,6 +2,7 @@ package infrastructure.persistance.local;
 
 import domain.Chat;
 import domain.ChatMessage;
+import domain.User;
 import ports.ChatRepository;
 import java.util.HashMap;
 import java.util.List;
@@ -38,5 +39,10 @@ public class InMemoryChatRepository implements ChatRepository {
     @Override
     public void save(final UUID chatId, final ChatMessage chatMessage) {
         chats.get(chatId).addMessage(chatMessage);
+    }
+
+    @Override
+    public void addUserToChat(final User user, final UUID chatId) {
+        chats.get(chatId).connectUser(user);
     }
 }

@@ -12,7 +12,7 @@ public class MessagingAPIFactory {
     private MessagingAPIFactory() {
     }
 
-    public static MessagingAPI createAPI(){
+    public static MessagingAPI createAPI(ApplicationProfile profile){
         if(instance == null){
             switch (profile){
                 case PRODUCTION:
@@ -23,4 +23,5 @@ public class MessagingAPIFactory {
         }
         return instance;
     }
+
 }

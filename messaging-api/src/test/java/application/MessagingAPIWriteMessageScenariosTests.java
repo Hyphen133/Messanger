@@ -13,7 +13,7 @@ public class MessagingAPIWriteMessageScenariosTests {
     @Test
     public void createNewChat(){
         //Given
-        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = TestMessagingAPIFactory.createTestAPI();
         final UUID id = UUID.randomUUID();
 
         //When
@@ -27,7 +27,7 @@ public class MessagingAPIWriteMessageScenariosTests {
     @Test
     public void updateChatOnNewMessage(){
         //Given
-        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = TestMessagingAPIFactory.createTestAPI();
         final UUID id = UUID.randomUUID();
         final String content = "Hello";
         final String author = "Author";
@@ -46,7 +46,7 @@ public class MessagingAPIWriteMessageScenariosTests {
     @Test
     public void createNewChatShouldBePersisted(){
         //Given
-        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = TestMessagingAPIFactory.createTestAPI();
         final ChatRepository chatRepository = LocalChatRepositoryFactory.getInstance();
         final UUID chatId = UUID.randomUUID();
 
@@ -60,7 +60,7 @@ public class MessagingAPIWriteMessageScenariosTests {
     @Test
     public void addUserToChat(){
         //Given
-        final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+        final MessagingAPI messagingAPI = TestMessagingAPIFactory.createTestAPI();
         final String username = "John";
         final UUID chatId = UUID.randomUUID();
         messagingAPI.createChatFor(chatId);
@@ -70,7 +70,5 @@ public class MessagingAPIWriteMessageScenariosTests {
 
         //Then
         Assert.assertEquals(1, messagingAPI.getUsersConnectedToChat(chatId).size());
-
-
     }
 }

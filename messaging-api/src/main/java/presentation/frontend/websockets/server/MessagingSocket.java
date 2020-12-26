@@ -1,5 +1,6 @@
 package presentation.frontend.websockets.server;
 
+import application.ApplicationProfile;
 import application.MessagingAPI;
 import application.MessagingAPIFactory;
 import application.WriteMessage;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 public class MessagingSocket {
     private final Logger logger = LoggerFactory.getInstance();
     private Session session;
-    private final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI();
+    private final MessagingAPI messagingAPI = MessagingAPIFactory.createAPI(ApplicationProfile.PRODUCTION);
     private final UserSocketRegistry userSocketRegistry = UserSocketRegistry.createRegistry();
     private final SessionUserRegistry sessionUserRegistry = SessionUserRegistry.createRegistry();
 
