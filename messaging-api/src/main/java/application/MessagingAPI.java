@@ -15,6 +15,7 @@ public interface MessagingAPI {
 
     List<ReadMessage> getMessagesForChat(UUID chatId);
 
+    @Deprecated
     List<ReadMessage> connectUserToChat(String username, UUID chatId);
 
     Set<User> getUsersConnectedToChat(UUID chatId);
